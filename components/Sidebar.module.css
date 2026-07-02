@@ -14,6 +14,29 @@
     background-color: #333;
 }
 
+.menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu li {
+    margin-bottom: 4px;
+}
+
+.menu a {
+    display: block;
+    padding: 12px 16px;
+    border-radius: 8px;
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.menu a:hover {
+    background-color: #585e68;
+}
+
 /*
 .title {
     font-size: 1.4rem;

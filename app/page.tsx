@@ -4,7 +4,7 @@ export default function Home() {
     <div className="">
       <main className="">
 
-        <h1 className="">
+        <h1 className="text-6xl font-bold text-black dark:text-white">
           Welcome to Demo AI
         </h1>
 

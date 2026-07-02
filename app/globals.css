@@ -25,7 +25,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* .container {
+.container {
     display: flex;
     height: 100vh;
 }
@@ -33,4 +33,4 @@ body {
 .content {
     flex: 1;
     padding: 30px;
-} */
+} 

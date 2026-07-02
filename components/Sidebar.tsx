@@ -1,5 +1,6 @@
-
 import styles from "./Sidebar.module.css";
+
+import Link from "next/link";
 
 export default function Sidebar() {
   return (
@@ -7,13 +8,29 @@ export default function Sidebar() {
       <h2>UI Demo AI</h2>
 
       <nav>
-        <ul>
-          <li>Home</li>
-          <li>Chat</li>
-          <li>Document</li>
-          <li>Analyze</li>
-          <li>Knowledge</li>
-          <li>Semantic</li>
+        <ul className={styles.menu}>
+
+          <li>
+            <Link href="/chat">Home</Link>
+          </li>
+
+          <li>
+            <Link href="/chat">Chat</Link>
+          </li>
+
+          <li>
+            <Link href="/chat">Document</Link>
+          </li>
+          <li>
+            <Link href="/chat">Analyze</Link>
+          </li>
+          <li>
+            <Link href="/chat">Knowledge</Link>
+          </li>
+          <li>
+            <Link href="/chat">Semantic</Link>
+          </li>
+
         </ul>
       </nav>
     </aside>
