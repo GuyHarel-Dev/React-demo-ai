@@ -3,6 +3,10 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --markdown-bg: #f8fafc;
+  --markdown-border: #d1d5db;
+  --markdown-code-bg: #e5e7eb;
+  --markdown-link: #2563eb;
 }
 
 @theme inline {
@@ -16,6 +20,10 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --markdown-bg: #111827;
+    --markdown-border: #374151;
+    --markdown-code-bg: #1f2937;
+    --markdown-link: #93c5fd;
   }
 }
 
@@ -26,11 +34,115 @@ body {
 }
 
 .container {
-    display: flex;
-    height: 100vh;
+  display: flex;
+  height: 100vh;
 }
 
 .content {
-    flex: 1;
-    padding: 30px;
-} 
+  flex: 1;
+  padding: 30px;
+}
+
+.markdown {
+  background: var(--markdown-bg);
+  border: 1px solid var(--markdown-border);
+  border-radius: 1rem;
+  color: var(--foreground);
+  line-height: 1.75;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  padding: 2rem;
+}
+
+.markdown :is(h1,h2,h3,h4,h5,h6) {
+  color: var(--foreground);
+  margin-top: 1.75em;
+  margin-bottom: 0.5em;
+  line-height: 1.2;
+  font-weight: 800;
+}
+
+.markdown h1 {
+  font-size: 2.5rem;
+}
+
+.markdown h2 {
+  font-size: 2rem;
+}
+
+.markdown p,
+.markdown ul,
+.markdown ol,
+.markdown blockquote,
+.markdown pre,
+.markdown table {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.markdown p {
+  max-width: 75ch;
+}
+
+.markdown a {
+  color: var(--markdown-link);
+  text-decoration: underline;
+  text-underline-offset: 0.2rem;
+}
+
+.markdown a:hover {
+  color: #1d4ed8;
+}
+
+.markdown blockquote {
+  border-left: 4px solid var(--markdown-border);
+  padding-left: 1rem;
+  color: var(--foreground);
+  opacity: 0.85;
+}
+
+.markdown code,
+.markdown kbd,
+.markdown samp,
+.markdown pre {
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, monospace;
+}
+
+.markdown code {
+  background: var(--markdown-code-bg);
+  border-radius: 0.35rem;
+  padding: 0.2rem 0.35rem;
+}
+
+.markdown pre {
+  background: var(--markdown-code-bg);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+.markdown table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.markdown th,
+.markdown td {
+  border: 1px solid var(--markdown-border);
+  padding: 0.75rem 1rem;
+}
+
+.markdown th {
+  background: rgba(148, 163, 184, 0.12);
+  text-align: left;
+}
+
+.markdown ul,
+.markdown ol {
+  padding-left: 1.5rem;
+}
+
+.markdown img {
+  max-width: 100%;
+  border-radius: 0.75rem;
+}
+ 
