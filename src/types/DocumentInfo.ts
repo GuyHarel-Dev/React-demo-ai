@@ -1,6 +1,4 @@
 export interface DocumentInfo {
-  id: string;
-  fileName: string;
-  createdAt: string | null;
-  fileUrl: string;
+  file_name: string;
+  file_url: string;
 }

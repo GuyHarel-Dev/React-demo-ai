@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { getDocuments } from "@/src/services/documentApi";
+import { getDocuments } from "@/src/services/documentsApi";
+import { DocumentInfo } from "@/src/types/DocumentInfo";
 
 interface Person {
   name: string;
@@ -9,7 +10,7 @@ interface Person {
 }
 
 export default function DocumentPage() {
-  const [documents, setDocuments] = useState<Person | null>(null);
+  const [documents, setDocuments] = useState<DocumentInfo[] | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -19,7 +20,7 @@ export default function DocumentPage() {
 
     try {
       const result = await getDocuments();
-      console.log('result=', result);
+      console.log("result=", result);
       setDocuments(result);
     } catch (err) {
       console.error(err);
@@ -35,9 +36,14 @@ export default function DocumentPage() {
       </button>
 
       {error && <p style={{ color: "red" }}>{error}</p>}
-      
-      <h2>{documents?.name}</h2>
 
+      <h2>{documents?.length} documents trouvés</h2>
+      {documents?.map((doc, index) => (
+        <div key={index}>
+          <h3>{doc.file_name}</h3>
+          <p>{doc.file_url}</p>
+        </div>
+      ))}
     </div>
   );
 }
