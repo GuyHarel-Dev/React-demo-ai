@@ -2,10 +2,14 @@
 
 import { useState } from "react";
 import { getDocuments } from "@/src/services/documentApi";
-import type { DocumentInfo } from "@/src/types/DocumentInfo";
+
+interface Person {
+  name: string;
+  age: number;
+}
 
 export default function DocumentPage() {
-  const [documents, setDocuments] = useState<DocumentInfo[]>([]);
+  const [documents, setDocuments] = useState<Person | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -15,8 +19,10 @@ export default function DocumentPage() {
 
     try {
       const result = await getDocuments();
+      console.log('result=', result);
       setDocuments(result);
     } catch (err) {
+      console.error(err);
       setError("Impossible de charger la liste des documents.");
     } finally {
       setIsLoading(false);
@@ -29,12 +35,9 @@ export default function DocumentPage() {
       </button>
 
       {error && <p style={{ color: "red" }}>{error}</p>}
+      
+      <h2>{documents?.name}</h2>
 
-      <ul>
-        {documents.map((doc) => (
-          <li key={doc.fileName}>{doc.fileName}</li>
-        ))}
-      </ul>
     </div>
   );
 }
