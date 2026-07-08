@@ -16,3 +16,5 @@ export async function getDocuments(): Promise<DocumentInfo[] | null> {
   return res.json();
 
 }
+
+/* test */

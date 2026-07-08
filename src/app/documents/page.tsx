@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { getDocuments } from "@/src/services/documentsApi";
+import { getDocuments } from "@/src/api/documentsService";
 import { DocumentInfo } from "@/src/types/DocumentInfo";
 
 interface Person {
