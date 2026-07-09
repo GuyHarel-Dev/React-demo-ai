@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { getDocuments } from "@/src/api/documentsService";
+import { getDocumentStream } from "@/src/api/documentsService";
 import { DocumentInfo } from "@/src/types/DocumentInfo";
 
 interface Person {
@@ -18,10 +19,21 @@ export default function DocumentPage() {
     setIsLoading(true);
     setError(null);
 
-    try {
+/*     try {
       const result = await getDocuments();
       console.log("result=", result);
       setDocuments(result);
+    } catch (err) {
+      console.error(err);
+      setError("Impossible de charger la liste des documents.");
+    } finally {
+      setIsLoading(false);
+    } */
+
+    try {
+      const result = await getDocumentStream("empty-pdf.pdf");
+      console.log("result=", result);
+
     } catch (err) {
       console.error(err);
       setError("Impossible de charger la liste des documents.");

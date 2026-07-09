@@ -17,4 +17,23 @@ export async function getDocuments(): Promise<DocumentInfo[] | null> {
 
 }
 
-/* test */
+/**
+ * Fetches a file stream from FastAPI and converts it into a browser Blob URL.
+ * @param fileName The name of the file to fetch (e.g., "report.pdf")
+ * @returns {Promise<string>} A temporary local browser URL pointing to the file data
+ */
+export async function getDocumentStream(fileName: string): Promise<string> {
+  // Use encodeURIComponent to handle spaces and special characters safely in the URL
+  const res = await fetch(`${API_BASE_URL}/document/stream/${encodeURIComponent(fileName)}`);
+
+  if (!res.ok) {
+    throw new Error(`Failed to stream document: ${res.status}`);
+  }
+
+  // 1. Download the response stream as a binary Blob object
+  const blob = await res.blob();
+
+  // 2. Generate a secure, temporary local pointer (e.g., blob:http://localhost:3000/...)
+  return URL.createObjectURL(blob);
+}
+
