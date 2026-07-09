@@ -9,7 +9,12 @@ import { DocumentInfo } from "@/src/types/DocumentInfo";
 
 export default function DocumentPage() {
   const [documents, setDocuments] = useState<DocumentInfo[] | null>(null);
-  const [selectedDocumentName, setSelectedDocumentName] = useState<string | null>(null);
+  const [selectedDocumentName, setSelectedDocumentName] = useState<
+    string | null
+  >(null);
+  const [selectedDocument, setSelectedDocument] = useState<DocumentInfo | null>(
+    null,
+  );
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -31,8 +36,8 @@ export default function DocumentPage() {
     }
   }
 
+  /* called on page load to fetch the list of documents from the FastAPI backend */
   useEffect(() => {
-    console.log("useEffect called");
     async function getData() {
       await loadDocuments();
     }
@@ -43,6 +48,18 @@ export default function DocumentPage() {
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedDocumentName(event.target.value);
     console.log("Selected document:", event.target.value);
+
+    const selectedName = event.target.value;
+
+    // Find the match in your documents state array
+    const matchedDoc = documents?.find((doc) => doc.file_name === selectedName);
+
+    if (matchedDoc) {
+      setSelectedDocument({
+        file_name: matchedDoc.file_name,
+        file_url: matchedDoc.file_url,
+      });
+    }
   };
 
   return (
@@ -61,7 +78,11 @@ export default function DocumentPage() {
 
       <div className="doc-view-area"></div>
       {selectedDocumentName ? (
-        <h1>{selectedDocumentName}</h1>
+        <div>
+          <h1>{selectedDocumentName}</h1>
+          <h1>{selectedDocument?.file_name}</h1>
+          <h1>{selectedDocument?.file_url}</h1>
+        </div>
       ) : (
         <p>No document selected</p>
       )}
