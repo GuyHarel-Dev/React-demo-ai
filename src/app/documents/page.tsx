@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import styles from './page.module.css';
+
+import { useState, useEffect } from "react";
 import { getDocuments } from "@/src/api/documentsService";
 import { getDocumentStream } from "@/src/api/documentsService";
 import { DocumentInfo } from "@/src/types/DocumentInfo";
@@ -19,26 +21,11 @@ export default function DocumentPage() {
     setIsLoading(true);
     setError(null);
 
-    /*     try {
-      const result = await getDocuments();
-      console.log("result=", result);
-      setDocuments(result);
-    } catch (err) {
-      console.error(err);
-      setError("Impossible de charger la liste des documents.");
-    } finally {
-      setIsLoading(false);
-    } */
-
     try {
-      // Revoke the old blob URL from memory if one exists to prevent memory leaks
-      if (selectedFileData) {
-        URL.revokeObjectURL(selectedFileData.url);
-      }
-
-      const data = await getDocumentStream("empty-pdf.pdf");
-        setSelectedFileData({ url: data.blobUrl, type: data.mimeType });
-      console.log("result=", selectedFileData);
+      const docInfoJson = await getDocuments();
+      setDocuments(docInfoJson);
+      console.log("docInfoJson:", docInfoJson);
+      console.log("documents", documents);
     } catch (err) {
       console.error(err);
       setError("Impossible de charger la liste des documents.");
@@ -46,33 +33,40 @@ export default function DocumentPage() {
       setIsLoading(false);
     }
   }
+
+  useEffect(() => {
+    console.log("useEffect called");
+    async function getData() {
+      await loadDocuments();
+    }
+    getData();
+    console.log("Documents state after useEffect:", documents);
+  }, []);
+
   return (
     <div>
-      <button onClick={loadDocuments} disabled={isLoading}>
-        {isLoading ? "Chargement..." : "Charger les documents"}
-      </button>
-
-      {error && <p style={{ color: "red" }}>{error}</p>}
-
-      <h2>{documents?.length} documents trouvés</h2>
-      {documents?.map((doc, index) => (
-        <div key={index}>
-          <h3>{doc.file_name}</h3>
-          <p>{doc.file_url}</p>
-        </div>
-      ))}
-
-      <div>
-        {selectedFileData ? (
-          <object
-            data={selectedFileData.url}
-            type={selectedFileData.type}
-            className="w-full h-[600px] border rounded-lg"
-          ></object>
-        ) : (
-          <p>test 2</p>
-        )}
+      <div className={styles.documentSelectionArea }>
+        <div className={styles.title}>Select or upload a document:</div>
+          <select className={styles.selectDocument}>
+            {documents?.map((doc, index) => (
+              // Added index fallback just to remain structurally bulletproof
+              <option key={`${doc.file_name}-${index}`} value={doc.file_name}>
+                {doc.file_name}
+              </option>
+            ))}
+          </select>
       </div>
+
+      <div className="doc-view-area"></div>
+      {selectedFileData ? (
+        <object
+          data={selectedFileData.url}
+          type={selectedFileData.type}
+          className="w-full h-[600px] border rounded-lg"
+        ></object>
+      ) : (
+        <p>No document selected</p>
+      )}
     </div>
   );
 }
