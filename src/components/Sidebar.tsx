@@ -19,7 +19,7 @@ export default function Sidebar() {
           </li>
 
           <li>
-            <Link href="/document">Document</Link>
+            <Link href="/documents">Document</Link>
           </li>
           <li>
             <Link href="/chat">Analyze</Link>

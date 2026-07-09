@@ -5,13 +5,13 @@ import { getDocuments } from "@/src/api/documentsService";
 import { getDocumentStream } from "@/src/api/documentsService";
 import { DocumentInfo } from "@/src/types/DocumentInfo";
 
-interface Person {
-  name: string;
-  age: number;
-}
-
 export default function DocumentPage() {
   const [documents, setDocuments] = useState<DocumentInfo[] | null>(null);
+  const [selectedFileData, setSelectedFileData] = useState<{
+    url: string;
+    type: string;
+  } | null>(null);
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -19,7 +19,7 @@ export default function DocumentPage() {
     setIsLoading(true);
     setError(null);
 
-/*     try {
+    /*     try {
       const result = await getDocuments();
       console.log("result=", result);
       setDocuments(result);
@@ -31,9 +31,14 @@ export default function DocumentPage() {
     } */
 
     try {
-      const result = await getDocumentStream("empty-pdf.pdf");
-      console.log("result=", result);
+      // Revoke the old blob URL from memory if one exists to prevent memory leaks
+      if (selectedFileData) {
+        URL.revokeObjectURL(selectedFileData.url);
+      }
 
+      const data = await getDocumentStream("empty-pdf.pdf");
+        setSelectedFileData({ url: data.blobUrl, type: data.mimeType });
+      console.log("result=", selectedFileData);
     } catch (err) {
       console.error(err);
       setError("Impossible de charger la liste des documents.");
@@ -56,6 +61,18 @@ export default function DocumentPage() {
           <p>{doc.file_url}</p>
         </div>
       ))}
+
+      <div>
+        {selectedFileData ? (
+          <object
+            data={selectedFileData.url}
+            type={selectedFileData.type}
+            className="w-full h-[600px] border rounded-lg"
+          ></object>
+        ) : (
+          <p>test 2</p>
+        )}
+      </div>
     </div>
   );
 }
