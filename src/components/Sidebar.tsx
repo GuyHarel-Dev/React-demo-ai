@@ -9,28 +9,18 @@ export default function Sidebar() {
 
       <nav>
         <ul className={styles.menu}>
-
-          <li>
-            <Link href="/chat">Home</Link>
-          </li>
-
-          <li>
-            <Link href="/chat">Chat</Link>
-          </li>
-
           <li>
             <Link href="/documents">Document</Link>
           </li>
           <li>
-            <Link href="/chat">Analyze</Link>
+            <Link href="/analyse">Analyze</Link>
           </li>
           <li>
-            <Link href="/chat">Knowledge</Link>
+            <Link href="/knowledge">Knowledge</Link>
           </li>
           <li>
-            <Link href="/chat">Semantic</Link>
+            <Link href="/emantic">Semantic</Link>
           </li>
-
         </ul>
       </nav>
     </aside>
