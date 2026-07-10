@@ -27,5 +27,6 @@
 .docViewArea .docViewObject {
     width: 100%;
     height: 85vh;
+    border: 2px solid red;
 }
 

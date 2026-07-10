@@ -8,6 +8,9 @@ import { getDocumentStream } from "@/src/api/documentsService";
 import { DocumentInfo } from "@/src/types/DocumentInfo";
 
 export default function DocumentPage() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
   const [documents, setDocuments] = useState<DocumentInfo[] | null>(null);
   const [selectedDocumentName, setSelectedDocumentName] = useState<
     string | null
@@ -15,9 +18,6 @@ export default function DocumentPage() {
   const [selectedDocument, setSelectedDocument] = useState<DocumentInfo | null>(
     null,
   );
-
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   async function loadDocuments() {
     setIsLoading(true);
@@ -45,20 +45,17 @@ export default function DocumentPage() {
     console.log("Documents state after useEffect:", documents);
   }, []);
 
-  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedDocumentName(event.target.value);
-    console.log("Selected document:", event.target.value);
-
+  const handleChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedName = event.target.value;
+    setSelectedDocumentName(selectedName);
 
     // Find the match in your documents state array
     const matchedDoc = documents?.find((doc) => doc.file_name === selectedName);
 
     if (matchedDoc) {
-      setSelectedDocument({
-        file_name: matchedDoc.file_name,
-        file_url: matchedDoc.file_url,
-      });
+      const docInfo = await getDocumentStream(matchedDoc.file_name);
+      setSelectedDocument(docInfo);
+      console.log("getDocumentStream result:", docInfo);
     }
   };
 
@@ -76,16 +73,21 @@ export default function DocumentPage() {
         </select>
       </div>
 
-      <div className="doc-view-area"></div>
-      {selectedDocumentName ? (
-        <div>
-          <h1>{selectedDocumentName}</h1>
-          <h1>{selectedDocument?.file_name}</h1>
-          <h1>{selectedDocument?.file_url}</h1>
-        </div>
+      <div className={styles.docViewArea}>
+      {selectedDocument ? (
+        <object className={styles.docViewObject}
+          key={selectedDocument.blob_url}
+          data={selectedDocument.blob_url}
+          type={selectedDocument.mime_type}
+        > 
+          <p>Cannot display document:{selectedDocument.file_name}</p>
+        </object>
       ) : (
         <p>No document selected</p>
       )}
+
+      </div>
+
     </div>
   );
 }
