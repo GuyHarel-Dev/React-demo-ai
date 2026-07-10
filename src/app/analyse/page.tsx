@@ -11,7 +11,6 @@ export default function AnalysePage() {
     null,
   );
 
-
   return (
     <div>
       <h1>Analyse Page</h1>
