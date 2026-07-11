@@ -10,6 +10,9 @@ export default function Sidebar() {
       <nav>
         <ul className={styles.menu}>
           <li>
+            <Link href="/">Home</Link>
+          </li>
+          <li>
             <Link href="/documents">Document</Link>
           </li>
           <li>
