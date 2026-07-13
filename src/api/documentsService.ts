@@ -43,3 +43,7 @@ export async function getDocumentStream(
     mime_type: mimeType,
   } as DocumentInfo;
 }
+
+export async function getDocumentAnalysis(fileName: string): Promise<string> {
+  return "abc";
+}
