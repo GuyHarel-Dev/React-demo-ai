@@ -4,26 +4,36 @@ import "@/src/app/styles/pageArea.css";
 import "@/src/app/styles/controlArea.css";
 import styles from "./page.module.css";
 
+import DocumentSelector from "@/src/app/components/DocumentSelector";
+
 import { useState } from "react";
 import { DocumentInfo } from "@/src/app/types/DocumentInfo";
-import DocumentSelector from "@/src/app/components/DocumentSelector";
-import { AVAILABLE_MODELS } from "@/src/app/config/models";
+import { getDocumentAnalysis } from "@/src/api/documentsService";
+
+import { AVAILABLE_MODELS } from "@/src/config/models";
 
 export default function AnalysePage() {
   const [selectedDocument, setSelectedDocument] = useState<DocumentInfo | null>(
     null,
   );
-
-  function handleClick() {
-    console.log("je suis click")
+  async function handleDocumentSelected(docInfo: DocumentInfo) {
+    setSelectedDocument(docInfo);
   }
 
+  async function onAnalyzeDocument() {
+    if (selectedDocument) {
+      const doc = await getDocumentAnalysis(selectedDocument.file_name);
+      console.log("onAnalyse", doc)
+    }
+  }
   return (
     <div className="pageArea">
       <div className="pageTitle">Analysis Page</div>
       <div className="controlArea">
-        <DocumentSelector onDocumentSelected={setSelectedDocument} />
-        <button className={styles.button} onClick={handleClick}>Analyze document</button>
+        <DocumentSelector onDocumentSelected={handleDocumentSelected} />
+        <button className={styles.button} onClick={onAnalyzeDocument}>
+          Analyze document
+        </button>
       </div>
       <pre>test</pre>
     </div>

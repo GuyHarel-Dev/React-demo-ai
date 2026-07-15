@@ -1,8 +1,11 @@
 import type { DocumentInfo } from "@/src/app/types/DocumentInfo";
 
+import { API } from "@/src/config/api";
+
 const API_BASE_URL = "http://127.0.0.1:8000/api/store";
 
 export async function getDocuments(): Promise<DocumentInfo[] | null> {
+  console.log("API", API.documents)
   const res = await fetch(`${API_BASE_URL}/documents`);
 
   if (!res.ok) {

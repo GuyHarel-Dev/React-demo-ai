@@ -20,7 +20,6 @@ export default function DocumentPage() {
 
     const doc = await getDocumentStream(docInfo.file_name);
     setSelectedDocument(doc);
-
   }
   
   return (
