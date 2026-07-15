@@ -31,7 +31,7 @@ export default function RootLayout({
     >
 
       <body className="min-h-full flex flex-col">
-        <div className="container">
+        <div className="flex w-full">
           <Sidebar />
 
           <main className="content">{children}</main>
