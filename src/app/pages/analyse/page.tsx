@@ -14,12 +14,18 @@ export default function AnalysePage() {
     null,
   );
 
+  function handleClick() {
+    console.log("je suis click")
+  }
+
   return (
     <div className="pageArea">
+      <div className="pageTitle">Analysis Page</div>
       <div className="controlArea">
-        <div className="pageTitle">Analysis Page</div>
-         <DocumentSelector onDocumentSelected={setSelectedDocument} />
+        <DocumentSelector onDocumentSelected={setSelectedDocument} />
+        <button className={styles.button} onClick={handleClick}>Analyze document</button>
       </div>
+      <pre>test</pre>
     </div>
   );
 }

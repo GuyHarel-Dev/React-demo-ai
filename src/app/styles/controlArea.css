@@ -1,10 +1,16 @@
 .controlArea {
-  background-color: #300c4d;
+  background-color: #111827;
   border: 1px solid #d0d0d0;
   border-radius: 6px;
   padding: 1px;
   color: white;
   font-size: 14px;
   width: 100%;
+  display: flex
+}
 
+.selectArea {
+  background-color: black;
+  margin-left: 10px;
+  margin-bottom: 10px;
 }

@@ -4,7 +4,7 @@ import "@/src/app/styles/controlArea.css";
 import styles from "./DocumentSelector.module.css";
 
 import { useState, useEffect } from "react";
-import { getDocuments, getDocumentStream } from "@/src/api/documentsService";
+import { getDocuments } from "@/src/api/documentsService";
 import { DocumentInfo } from "@/src/app/types/DocumentInfo";
 
 interface DocumentSelectorProps {
@@ -33,19 +33,14 @@ export default function DocumentSelector({
     const matchedDoc = documents?.find((doc) => doc.file_name === selectedName);
 
     if (matchedDoc) {
-      const docInfo = await getDocumentStream(matchedDoc.file_name);
-      onDocumentSelected(docInfo); // 👈 Passes the fetched document object up to the parent page
+      onDocumentSelected(matchedDoc);
     }
   };
 
   return (
-    <div >
+    <div>
       <div className={styles.title}>Select a document:</div>
-      <select
-        className={styles.selectDocument}
-        onChange={handleChange}
-        defaultValue=""
-      >
+      <select className="selectArea" onChange={handleChange} defaultValue="">
         <option value="" disabled>
           (select a document)
         </option>
@@ -55,7 +50,6 @@ export default function DocumentSelector({
           </option>
         ))}
       </select>
-
     </div>
   );
 }
