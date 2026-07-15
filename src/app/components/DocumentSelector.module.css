@@ -1,24 +1,15 @@
-.documentSelectionArea {
-  background-color: #300c4d;
-  border: 1px solid #d0d0d0;
-  border-radius: 6px;
-  padding: 1px;
-  color: white;
-  font-size: 14px;
-  width: 100%;
-}
 
-.documentSelectionArea .title {
+.title {
   margin-bottom: 10px;
 }
 
-.documentSelectionArea .selectDocument {
+.selectDocument {
   background-color: #300c4d;
   margin-left: 10px;
   margin-bottom: 10px;
 }
 
-.documentSelectionArea button {
+.button {
   background-color: #283f7a;
   margin-bottom: 10px;
 }

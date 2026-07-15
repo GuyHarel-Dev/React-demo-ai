@@ -1,5 +1,7 @@
 "use client";
 
+import "@/src/app/styles/pageArea.css";
+import "@/src/app/styles/controlArea.css";
 import styles from "./page.module.css";
 
 import { useState } from "react";
@@ -13,12 +15,10 @@ export default function AnalysePage() {
   );
 
   return (
-    <div className={styles.page_area}>
-      <div className={styles.document_analysis_area}>
-        <div className={styles.child_area}>
-          <DocumentSelector onDocumentSelected={setSelectedDocument} />
-        </div>
-        <div className={styles.child_area}>deux</div>
+    <div className="pageArea">
+      <div className="controlArea">
+        <div className="pageTitle">Analysis Page</div>
+         <DocumentSelector onDocumentSelected={setSelectedDocument} />
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 "use client";
 
-import styles from "./DocumentSelector.module.css"; // Move select styles here if needed
+import "@/src/app/styles/controlArea.css";
+import styles from "./DocumentSelector.module.css";
 
 import { useState, useEffect } from "react";
 import { getDocuments, getDocumentStream } from "@/src/api/documentsService";
@@ -38,7 +39,7 @@ export default function DocumentSelector({
   };
 
   return (
-    <div className={styles.documentSelectionArea}>
+    <div >
       <div className={styles.title}>Select a document:</div>
       <select
         className={styles.selectDocument}
