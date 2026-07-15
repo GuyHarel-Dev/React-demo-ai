@@ -3,8 +3,8 @@
 import styles from "./page.module.css";
 
 import { useState } from "react";
-import { DocumentInfo } from "@/src/types/DocumentInfo";
-import DocumentSelector from "@/src/components/DocumentSelector";
+import { DocumentInfo } from "@/src/app/types/DocumentInfo";
+import DocumentSelector from "@/src/app/components/DocumentSelector";
 
 export default function DocumentPage() {
   const [selectedDocument, setSelectedDocument] = useState<DocumentInfo | null>(

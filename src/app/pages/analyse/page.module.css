@@ -10,11 +10,9 @@
 
 .page_area .document_analysis_area .child_area {
   display: flex;
-  align-items: center;
   width:100%;
-  border:2px solid blue;
-}
 
+}
 
 .border_red {
     border:2px solid red;

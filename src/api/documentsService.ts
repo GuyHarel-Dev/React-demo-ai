@@ -1,4 +1,4 @@
-import type { DocumentInfo } from "@/src/types/DocumentInfo";
+import type { DocumentInfo } from "@/src/app/types/DocumentInfo";
 
 const API_BASE_URL = "http://127.0.0.1:8000/api/store";
 

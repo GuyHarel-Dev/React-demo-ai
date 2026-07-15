@@ -13,10 +13,10 @@ export default function Sidebar() {
             <Link href="/">Home</Link>
           </li>
           <li>
-            <Link href="/documents">Document</Link>
+            <Link href="/pages/documents">Document</Link>
           </li>
           <li>
-            <Link href="/analyse">Analyze</Link>
+            <Link href="/pages/analyse">Analyze</Link>
           </li>
           <li>
             <Link href="/knowledge">Knowledge</Link>

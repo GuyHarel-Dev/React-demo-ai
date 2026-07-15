@@ -4,7 +4,7 @@ import styles from "./DocumentSelector.module.css"; // Move select styles here i
 
 import { useState, useEffect } from "react";
 import { getDocuments, getDocumentStream } from "@/src/api/documentsService";
-import { DocumentInfo } from "@/src/types/DocumentInfo";
+import { DocumentInfo } from "@/src/app/types/DocumentInfo";
 
 interface DocumentSelectorProps {
   onDocumentSelected: (docInfo: DocumentInfo) => void;
