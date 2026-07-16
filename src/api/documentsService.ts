@@ -1,6 +1,11 @@
 import type { DocumentInfo } from "@/src/app/types/DocumentInfo";
 
 import { apiRoutes } from "@/src/config/apiRoutes";
+import { LLM_MODELS } from "@/src/config/models"
+
+export function getModels() {
+  return LLM_MODELS;
+}
 
 export async function getDocuments(): Promise<DocumentInfo[] | null> {
 
