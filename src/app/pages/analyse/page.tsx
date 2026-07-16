@@ -33,15 +33,13 @@ export default function AnalysePage() {
   }
 
   async function onAnalyzeDocument() {
-    if (selectedDocument) {
-      const doc = await getDocumentAnalysis(selectedModel, selectedDocument);
-      console.log("onAnalyse", doc);
-    }
+    console.log(selectedModel);
+    console.log(selectedDocument);
   }
   return (
     <div className="pageArea">
       <div className="pageTitle">Analysis Page</div>
-      <div className="controlArea">
+      <div className={`controlArea ${styles.controlAreaFlex}`}>
         <ItemSelector
           title="Select a document:"
           itemArray={documents}
