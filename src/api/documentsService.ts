@@ -1,12 +1,10 @@
 import type { DocumentInfo } from "@/src/app/types/DocumentInfo";
 
-import { API } from "@/src/config/api";
-
-const API_BASE_URL = "http://127.0.0.1:8000/api/store";
+import { apiRoutes } from "@/src/config/apiRoutes";
 
 export async function getDocuments(): Promise<DocumentInfo[] | null> {
-  console.log("API", API.documents)
-  const res = await fetch(`${API_BASE_URL}/documents`);
+
+  const res = await fetch(apiRoutes.getDocuments);
 
   if (!res.ok) {
     throw new Error(`Failed to fetch documents: ${res.status}`);
@@ -22,12 +20,10 @@ export async function getDocuments(): Promise<DocumentInfo[] | null> {
  * @returns {Promise<{ blobUrl: string; mimeType: string }>} An object containing the temporary browser URL and the MIME type
  */
 export async function getDocumentStream(
-  fileName: string,
+  file_name: string,
 ): Promise<DocumentInfo> {
-  // Use encodeURIComponent to handle spaces and special characters safely in the URL
-  const res = await fetch(
-    `${API_BASE_URL}/document/stream/${encodeURIComponent(fileName)}`,
-  );
+  const apiDocumentStreamUrl = apiRoutes.getDocumentStream(file_name);
+  const res = await fetch(apiDocumentStreamUrl);
 
   if (!res.ok) {
     throw new Error(`Failed to stream document: ${res.status}`);
@@ -47,6 +43,9 @@ export async function getDocumentStream(
   } as DocumentInfo;
 }
 
-export async function getDocumentAnalysis(fileName: string): Promise<string> {
+export async function getDocumentAnalysis(
+  model_name: string,
+  file_name: string,
+): Promise<string> {
   return "abc";
 }
