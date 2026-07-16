@@ -1,14 +1,13 @@
 import type { DocumentInfo } from "@/src/app/types/DocumentInfo";
 
 import { apiRoutes } from "@/src/app/config/apiRoutes";
-import { LLM_MODELS } from "@/src/app/config/models"
+import { LLM_MODELS } from "@/src/app/config/models";
 
 export function getModels() {
   return LLM_MODELS;
 }
 
 export async function getDocuments(): Promise<DocumentInfo[] | null> {
-
   const res = await fetch(apiRoutes.getDocuments);
 
   if (!res.ok) {
@@ -25,10 +24,10 @@ export async function getDocuments(): Promise<DocumentInfo[] | null> {
  * @returns {Promise<{ blobUrl: string; mimeType: string }>} An object containing the temporary browser URL and the MIME type
  */
 export async function getDocumentStream(
-  file_name: string,
+  fileName: string,
 ): Promise<DocumentInfo> {
-  const apiDocumentStreamUrl = apiRoutes.getDocumentStream(file_name);
-  const res = await fetch(apiDocumentStreamUrl);
+  const url = apiRoutes.getDocumentStream(fileName);
+  const res = await fetch(url);
 
   if (!res.ok) {
     throw new Error(`Failed to stream document: ${res.status}`);
@@ -49,8 +48,20 @@ export async function getDocumentStream(
 }
 
 export async function getDocumentAnalysis(
-  model_name: string,
-  file_name: string,
+  modelName: string,
+  fileName: string,
 ): Promise<string> {
-  return "abc";
+  const url = apiRoutes.postDocumentAnalysis;
+
+  console.log("post=", JSON.stringify({ model_name: modelName, file_name: fileName }))
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ model_name: modelName, file_name: fileName }),
+  });
+
+  console.log(res);
+  return "1111";
 }

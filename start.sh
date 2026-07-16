@@ -10,6 +10,7 @@ npm run dev &
 sleep 3
 
 # 4. Open your clean, isolated Chrome Guest App window
-start chrome --guest --app="http://localhost:3000"
+#start chrome --guest --app="http://localhost:3000"
+start chrome --guest "http://localhost:3000"
 
 fg %1

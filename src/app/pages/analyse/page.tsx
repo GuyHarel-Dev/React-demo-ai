@@ -13,7 +13,7 @@ import { getDocumentAnalysis, getModels } from "@/src/api/documentsService";
 
 export default function AnalysePage() {
   const [selectedModel, setSelectedModel] = useState<string>("");
-  const [selectedDocument, setSelectedDocument] = useState<string | null>(null);
+  const [selectedDocument, setSelectedDocument] = useState<string>("");
 
   const documents = useDocuments();
 
@@ -33,8 +33,7 @@ export default function AnalysePage() {
   }
 
   async function onAnalyzeDocument() {
-    console.log(selectedModel);
-    console.log(selectedDocument);
+      const doc = await getDocumentAnalysis(selectedModel, selectedDocument);
   }
   return (
     <div className="pageArea">

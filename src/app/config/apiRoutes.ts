@@ -8,6 +8,3 @@ export const apiRoutes = {
   semantic: `${apiBaseUrl}/semantic`,
   models: `${apiBaseUrl}/models`, */
 };
-
-console.log("test")
-console.log(apiRoutes)
