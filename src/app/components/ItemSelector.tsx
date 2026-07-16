@@ -7,20 +7,20 @@ import { ItemSelectorEntity } from "@/src/app/types/ItemSelectorEntity";
 interface SelectorProps {
   title: string;
   itemArray: ItemSelectorEntity[];
-  onLabelSelected: (label: string) => void;
+  onItemSelected: (item: ItemSelectorEntity) => void;
 }
 
 export default function Selector({
   title,
   itemArray,
-  onLabelSelected,
+  onItemSelected,
 }: SelectorProps) {
   const handleChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedLabel = event.target.value;
-    const matchedDoc = itemArray?.find((doc) => doc.label === selectedLabel);
+    const selectedItem = event.target.value;
+    const matchedDoc = itemArray?.find((doc) => doc.label === selectedItem);
 
     if (matchedDoc) {
-      onLabelSelected(selectedLabel);
+      onItemSelected(matchedDoc);
     }
   };
 

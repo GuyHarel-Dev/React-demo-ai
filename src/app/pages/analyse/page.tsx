@@ -6,34 +6,46 @@ import "@/src/app/styles/controlArea.css";
 import styles from "./page.module.css";
 
 import ItemSelector from "@/src/app/components/ItemSelector";
+import { ItemSelectorEntity } from "@/src/app/types/ItemSelectorEntity";
 
 import { useState } from "react";
 import { useDocuments } from "@/src/app/hooks/useDocuments";
 import { getDocumentAnalysis, getModels } from "@/src/api/documentsService";
 
 export default function AnalysePage() {
-  const [selectedModel, setSelectedModel] = useState<string>("");
-  const [selectedDocument, setSelectedDocument] = useState<string>("");
+  const [selectedModel, setSelectedModel] = useState<ItemSelectorEntity>();
+  const [selectedDocument, setSelectedDocument] =
+    useState<ItemSelectorEntity>();
 
   const documents = useDocuments();
 
   function getModelSelection() {
     return getModels().map((m) => ({
-      id: m.id,
-      label: m.name,
+      id: m.name,
+      label: m.desc,
     }));
   }
 
-  async function handleDocumentSelected(documentName: string) {
-    setSelectedDocument(documentName);
+  async function handleDocumentSelected(document: ItemSelectorEntity) {
+    setSelectedDocument(document);
   }
 
-  async function handleModelSelected(modelName: string) {
-    setSelectedModel(modelName);
+  async function handleModelSelected(model: ItemSelectorEntity) {
+    console.log("model_entity", model);
+    setSelectedModel(model);
   }
 
   async function onAnalyzeDocument() {
-      const doc = await getDocumentAnalysis(selectedModel, selectedDocument);
+    console.log("selectedModel", selectedModel);
+    console.log("selectedDocument", selectedDocument);
+    if (selectedModel && selectedDocument) {
+      const doc = await getDocumentAnalysis(
+        selectedModel.id,
+        selectedDocument.id,
+      );
+
+      console.log("doc", doc)
+    }
   }
   return (
     <div className="pageArea">
@@ -42,12 +54,12 @@ export default function AnalysePage() {
         <ItemSelector
           title="Select a document:"
           itemArray={documents}
-          onLabelSelected={handleDocumentSelected}
+          onItemSelected={handleDocumentSelected}
         />
         <ItemSelector
           title="Select a model:"
           itemArray={getModelSelection()}
-          onLabelSelected={handleModelSelected}
+          onItemSelected={handleModelSelected}
         />
         <button className={styles.button} onClick={onAnalyzeDocument}>
           Analyze document

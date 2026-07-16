@@ -7,6 +7,7 @@ import "@/src/app/styles/pageArea.css";
 import "@/src/app/styles/controlArea.css";
 
 import ItemSelector from "@/src/app/components/ItemSelector";
+import { ItemSelectorEntity } from "@/src/app/types/ItemSelectorEntity";
 
 import { DocumentInfo } from "@/src/app/types/DocumentInfo";
 
@@ -20,9 +21,14 @@ export default function DocumentPage() {
 
   const documents = useDocuments();
 
-  async function handleDocumentSelected(documentName: string) {
-    const doc = await getDocumentStream(documentName);
-    setSelectedDocument(doc);
+  async function handleDocumentSelected(item: ItemSelectorEntity) {
+    const documentName = documents.find((d) => d.id === item.id);
+
+    if (documentName) {
+      console.log("documentName=", documentName.label);
+      const doc = await getDocumentStream(documentName.label);
+      setSelectedDocument(doc);
+    }
   }
 
   return (
@@ -32,7 +38,7 @@ export default function DocumentPage() {
         <ItemSelector
           title="Select a document:"
           itemArray={documents}
-          onLabelSelected={handleDocumentSelected}
+          onItemSelected={handleDocumentSelected}
         />
       </div>
 

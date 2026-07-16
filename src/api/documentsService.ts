@@ -53,15 +53,24 @@ export async function getDocumentAnalysis(
 ): Promise<string> {
   const url = apiRoutes.postDocumentAnalysis;
 
-  console.log("post=", JSON.stringify({ model_name: modelName, file_name: fileName }))
-  const res = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ model_name: modelName, file_name: fileName }),
-  });
+  console.log(
+    "post=",
+    JSON.stringify({ model_name: modelName, file_name: fileName }),
+  );
 
-  console.log(res);
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ model_name: modelName, file_name: fileName }),
+    });
+
+    console.log(res);
+  } catch (ex) {
+    console.log(ex);
+  }
+
   return "1111";
 }

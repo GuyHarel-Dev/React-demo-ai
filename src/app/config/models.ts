@@ -1,4 +1,4 @@
 export const LLM_MODELS = [
-    { id: "gemma3:1b", name: "Gemma 3 (1B)" },
-    { id: "qwen3:4b", name: "Qwen 3 (4B)" }
+    { name: "gemma3:1b", desc: "Gemma 3 (1B)" },
+    { name: "qwen3:4b", desc: "Qwen 3 (4B)" }
 ];

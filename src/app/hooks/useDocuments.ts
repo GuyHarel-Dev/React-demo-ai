@@ -12,8 +12,8 @@ export function useDocuments() {
       const docs = await getDocuments();
 
       setDocuments(
-        (docs ?? []).map((d, index) => ({
-          id: index.toString(),
+        (docs ?? []).map((d) => ({
+          id: d.file_name,
           label: d.file_name,
         }))
       );
