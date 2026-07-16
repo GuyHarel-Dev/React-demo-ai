@@ -7,16 +7,17 @@ import styles from "./page.module.css";
 import ItemSelector from "@/src/app/components/ItemSelector";
 
 import { useState } from "react";
-import { DocumentInfo } from "@/src/app/types/DocumentInfo";
+import { useDocuments } from "@/src/app/hooks/useDocuments";
+
 import { getDocumentAnalysis } from "@/src/api/documentsService";
 
 import { getModels } from "@/src/api/documentsService";
 
 export default function AnalysePage() {
   const [selectedModel, setSelectedModel] = useState<string>("");
-  const [selectedDocument, setSelectedDocument] = useState<DocumentInfo | null>(
-    null,
-  );
+  const [selectedDocument, setSelectedDocument] = useState<string | null>(null);
+
+  const documents = useDocuments();
 
   const handleModelSelected = async (
     event: React.ChangeEvent<HTMLSelectElement>,
@@ -25,15 +26,15 @@ export default function AnalysePage() {
     setSelectedModel(selectedModel);
   };
 
-  async function handleDocumentSelected(docInfo: DocumentInfo) {
-    setSelectedDocument(docInfo);
+  async function handleDocumentSelected(documentName: string) {
+    setSelectedDocument(documentName);
   }
 
   async function onAnalyzeDocument() {
     if (selectedDocument) {
       const doc = await getDocumentAnalysis(
         selectedModel,
-        selectedDocument.file_name,
+        selectedDocument,
       );
       console.log("onAnalyse", doc);
     }
@@ -42,7 +43,10 @@ export default function AnalysePage() {
     <div className="pageArea">
       <div className="pageTitle">Analysis Page</div>
       <div className="controlArea">
-        <ItemSelector itemArray={[]} onDocumentSelected={handleDocumentSelected} />
+        <ItemSelector
+          itemArray={documents}
+          onLabelSelected={handleDocumentSelected}
+        />
         <div>Select a model:</div>
         <select onChange={handleModelSelected} defaultValue="">
           <option value="" disabled>
