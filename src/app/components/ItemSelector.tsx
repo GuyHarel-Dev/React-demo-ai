@@ -25,10 +25,9 @@ export default function Selector({
 
   return (
     <div>
-      <div className={styles.title}>Select a document:</div>
       <select className="selectArea" onChange={handleChange} defaultValue="">
         <option value="" disabled>
-          (select a document)
+          (select an item)
         </option>
         {itemArray?.map((doc, index) => (
           <option key={`${doc.id}-${index}`} value={doc.label}>

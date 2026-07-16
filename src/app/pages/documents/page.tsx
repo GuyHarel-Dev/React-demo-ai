@@ -25,11 +25,11 @@ export default function DocumentPage() {
     setSelectedDocument(doc);
   }
 
-
   return (
     <div className="pageArea">
       <div className="pageTitle">Document Page</div>
       <div className="controlArea">
+        <div>Select a document:</div>
         <ItemSelector
           itemArray={documents}
           onLabelSelected={handleDocumentSelected}
