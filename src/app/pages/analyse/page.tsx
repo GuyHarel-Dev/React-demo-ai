@@ -42,13 +42,13 @@ export default function AnalysePage() {
     <div className="pageArea">
       <div className="pageTitle">Analysis Page</div>
       <div className="controlArea">
-        <div>Select a document:</div>
         <ItemSelector
+          title="Select a document:"
           itemArray={documents}
           onLabelSelected={handleDocumentSelected}
         />
-        <div>Select a model:</div>
         <ItemSelector
+          title="Select a model:"
           itemArray={getModelSelection()}
           onLabelSelected={handleModelSelected}
         />

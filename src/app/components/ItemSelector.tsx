@@ -1,16 +1,17 @@
 "use client";
 
 import "@/src/app/styles/controlArea.css";
-import styles from "./ItemSelector.module.css";
 
 import { ItemSelectorEntity } from "@/src/app/types/ItemSelectorEntity";
 
 interface SelectorProps {
+  title: string;
   itemArray: ItemSelectorEntity[];
   onLabelSelected: (label: string) => void;
 }
 
 export default function Selector({
+  title,
   itemArray,
   onLabelSelected,
 }: SelectorProps) {
@@ -25,6 +26,7 @@ export default function Selector({
 
   return (
     <div>
+      <div>{title}</div>
       <select className="selectArea" onChange={handleChange} defaultValue="">
         <option value="" disabled>
           (select an item)

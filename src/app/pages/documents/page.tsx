@@ -29,8 +29,8 @@ export default function DocumentPage() {
     <div className="pageArea">
       <div className="pageTitle">Document Page</div>
       <div className="controlArea">
-        <div>Select a document:</div>
         <ItemSelector
+          title="Select a document:"
           itemArray={documents}
           onLabelSelected={handleDocumentSelected}
         />
