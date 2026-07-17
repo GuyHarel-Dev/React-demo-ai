@@ -10,7 +10,7 @@ interface SelectorProps {
   onItemSelected: (item: ItemSelectorEntity) => void;
 }
 
-export default function Selector({
+export function ItemSelector({
   title,
   itemArray,
   onItemSelected,

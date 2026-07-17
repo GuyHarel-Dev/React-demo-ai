@@ -1,12 +1,13 @@
 "use client";
 
 
-import ItemSelector from "@/src/app/components/ItemSelector";
+import { ItemSelector } from "@/src/app/components/ItemSelector";
 import { ItemSelectorEntity } from "@/src/app/types/ItemSelectorEntity";
 import { useState } from "react";
 import { useDocuments } from "@/src/app/hooks/useDocuments";
 import { getDocumentAnalysis, getModels } from "@/src/api/documentsService";
 import { JsonValue } from "@/src/app/types/JsonVAlue";
+import { LoadingPanel } from "@/src/app/components/LoadingPanel"
 
 import "@/src/app/styles/pageArea.css";
 import "@/src/app/styles/controlArea.css";
@@ -70,8 +71,7 @@ export default function AnalysePage() {
           onItemSelected={handleModelSelected}
         />
         <button className={styles.button} onClick={onAnalyzeDocument} disabled={isLoading}>
-          {isLoading ? "Analyzing..." : "Analyze document"}
-
+          {isLoading ? (<LoadingPanel message="Analyzing..." />) : "Analyze document"}
         </button>
       </div>
       <pre>{JSON.stringify(analysisResult, null, 2)}</pre>

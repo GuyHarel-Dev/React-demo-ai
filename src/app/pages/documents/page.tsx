@@ -6,7 +6,7 @@ import styles from "./page.module.css";
 import "@/src/app/styles/pageArea.css";
 import "@/src/app/styles/controlArea.css";
 
-import ItemSelector from "@/src/app/components/ItemSelector";
+import { ItemSelector } from "@/src/app/components/ItemSelector";
 import { ItemSelectorEntity } from "@/src/app/types/ItemSelectorEntity";
 
 import { DocumentInfo } from "@/src/app/types/DocumentInfo";
