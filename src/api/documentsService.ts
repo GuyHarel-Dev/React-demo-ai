@@ -63,9 +63,7 @@ export async function getDocumentAnalysis(
     body: JSON.stringify({ model_name: modelName, file_name: fileName }),
   });
 
-  if (!res.ok) {
-    throw new Error(`HTTP ${res.status}`);
-  }
+  console.log("res=", res)
 
   return await res.json(); 
 
