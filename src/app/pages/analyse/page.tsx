@@ -1,21 +1,21 @@
 "use client";
 
-import "@/src/app/styles/pageArea.css";
-import "@/src/app/styles/controlArea.css";
-
-import styles from "./page.module.css";
 
 import ItemSelector from "@/src/app/components/ItemSelector";
 import { ItemSelectorEntity } from "@/src/app/types/ItemSelectorEntity";
-
 import { useState } from "react";
 import { useDocuments } from "@/src/app/hooks/useDocuments";
 import { getDocumentAnalysis, getModels } from "@/src/api/documentsService";
+import {JsonValue } from "@/src/app/types/JsonVAlue";
+
+import "@/src/app/styles/pageArea.css";
+import "@/src/app/styles/controlArea.css";
+import styles from "./page.module.css";
 
 export default function AnalysePage() {
   const [selectedModel, setSelectedModel] = useState<ItemSelectorEntity>();
-  const [selectedDocument, setSelectedDocument] =
-    useState<ItemSelectorEntity>();
+  const [selectedDocument, setSelectedDocument] = useState<ItemSelectorEntity>();
+  const [analysisResult, setAnalysisResult] = useState<JsonValue>();
 
   const documents = useDocuments();
 
@@ -38,13 +38,13 @@ export default function AnalysePage() {
   async function onAnalyzeDocument() {
     console.log("selectedModel", selectedModel);
     console.log("selectedDocument", selectedDocument);
+
     if (selectedModel && selectedDocument) {
       const doc = await getDocumentAnalysis(
         selectedModel.id,
         selectedDocument.id,
       );
-
-      console.log("doc", doc)
+      setAnalysisResult(doc);
     }
   }
   return (
@@ -65,7 +65,7 @@ export default function AnalysePage() {
           Analyze document
         </button>
       </div>
-      <pre>test</pre>
+      <pre>{JSON.stringify(analysisResult, null, 2)}</pre>
     </div>
   );
 }
