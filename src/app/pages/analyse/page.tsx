@@ -6,7 +6,7 @@ import { ItemSelectorEntity } from "@/src/app/types/ItemSelectorEntity";
 import { useState } from "react";
 import { useDocuments } from "@/src/app/hooks/useDocuments";
 import { getDocumentAnalysis, getModels } from "@/src/api/documentsService";
-import {JsonValue } from "@/src/app/types/JsonVAlue";
+import { JsonValue } from "@/src/app/types/JsonVAlue";
 
 import "@/src/app/styles/pageArea.css";
 import "@/src/app/styles/controlArea.css";
@@ -16,6 +16,7 @@ export default function AnalysePage() {
   const [selectedModel, setSelectedModel] = useState<ItemSelectorEntity>();
   const [selectedDocument, setSelectedDocument] = useState<ItemSelectorEntity>();
   const [analysisResult, setAnalysisResult] = useState<JsonValue>();
+  const [isLoading, setIsLoading] = useState(false);
 
   const documents = useDocuments();
 
@@ -36,15 +37,22 @@ export default function AnalysePage() {
   }
 
   async function onAnalyzeDocument() {
-    console.log("selectedModel", selectedModel);
-    console.log("selectedDocument", selectedDocument);
-
     if (selectedModel && selectedDocument) {
-      const doc = await getDocumentAnalysis(
-        selectedModel.id,
-        selectedDocument.id,
-      );
-      setAnalysisResult(doc);
+      try {
+        setIsLoading(true);
+
+        const doc = await getDocumentAnalysis(
+          selectedModel.id,
+          selectedDocument.id,
+        );
+        setAnalysisResult(doc);
+
+      } catch (err) {
+        console.error(err);
+
+      } finally {
+        setIsLoading(false);
+      }
     }
   }
   return (
@@ -61,8 +69,9 @@ export default function AnalysePage() {
           itemArray={getModelSelection()}
           onItemSelected={handleModelSelected}
         />
-        <button className={styles.button} onClick={onAnalyzeDocument}>
-          Analyze document
+        <button className={styles.button} onClick={onAnalyzeDocument} disabled={isLoading}>
+          {isLoading ? "Analyzing..." : "Analyze document"}
+
         </button>
       </div>
       <pre>{JSON.stringify(analysisResult, null, 2)}</pre>
