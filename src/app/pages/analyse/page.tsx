@@ -21,7 +21,7 @@ export default function AnalysePage() {
   const [analysisResult, setAnalysisResult] = useState<JsonValue>();
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>()
+  const [errorMessage, setErrorMessage] = useState<string>("")
 
   const documents = useDocuments();
 
@@ -44,6 +44,8 @@ export default function AnalysePage() {
     if (selectedModel && selectedDocument) {
       try {
         setIsLoading(true);
+        setHasError(false);
+        setErrorMessage("");
 
         const doc = await getDocumentAnalysis(
           selectedModel.id,
@@ -52,7 +54,7 @@ export default function AnalysePage() {
         setAnalysisResult(doc);
 
       } catch (err) {
-        
+
         setHasError(true)
         if (err instanceof Error) {
           setErrorMessage(err.message);
@@ -83,7 +85,7 @@ export default function AnalysePage() {
           {isLoading ? (<LoadingPanel message="Analyzing..." />) : "Analyze document"}
         </button>
       </div>
-      {hasError ? <div>{errorMessage}</div> : <div>pas erreur</div>}
+      <div>{hasError ? <ErrorPanel msg={errorMessage}></ErrorPanel> : <p></p>}</div>
       <pre>{JSON.stringify(analysisResult, null, 2)}</pre>
     </div>
   );

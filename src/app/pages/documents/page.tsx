@@ -36,11 +36,13 @@ export default function DocumentPage() {
         setSelectedDocument(doc);
       }
     } catch (err) {
-      if (err instanceof Error) {
-        setHasError(true);
-        setErrorMessage(err.message);
-      }
 
+      setHasError(true)
+      if (err instanceof Error) {
+        setErrorMessage(err.message);
+      } else {
+        setErrorMessage(String(err));
+      }
     } 
   }
 
@@ -54,7 +56,7 @@ export default function DocumentPage() {
           onItemSelected={handleDocumentSelected}
         />
       </div>
-      <h1>{hasError ? <ErrorPanel msg={errorMessage}></ErrorPanel> : <p></p>}</h1>
+      <div>{hasError ? <ErrorPanel msg={errorMessage}></ErrorPanel> : <p></p>}</div>
       
       <div className={styles.docViewArea}>
         {selectedDocument ? (
