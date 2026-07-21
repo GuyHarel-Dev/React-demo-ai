@@ -10,6 +10,7 @@ export function getModels() {
 }
 
 export async function getDocuments(): Promise<DocumentInfo[] | null> {
+
   const res = await fetch(apiRoutes.getDocuments);
 
   if (!res.ok) {
@@ -28,8 +29,11 @@ export async function getDocuments(): Promise<DocumentInfo[] | null> {
 export async function getDocumentStream(
   fileName: string,
 ): Promise<DocumentInfo> {
+
   const url = apiRoutes.getDocumentStream(fileName);
-  const res = await fetch(url);
+  const res = await fetch(url, {
+    cache: "no-store",
+  });
 
   if (!res.ok) {
     const error = await res.json();

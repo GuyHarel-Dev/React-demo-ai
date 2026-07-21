@@ -1,18 +1,19 @@
 "use client";
 
+import { useState } from "react";
 
 import { ItemSelector } from "@/src/app/components/ItemSelector";
 import { ItemSelectorEntity } from "@/src/app/types/ItemSelectorEntity";
-import { useState } from "react";
+
 import { useDocuments } from "@/src/app/hooks/useDocuments";
 import { getDocumentAnalysis, getModels } from "@/src/api/documentsService";
-import { JsonValue } from "@/src/app/types/JsonVAlue";
+import { JsonValue } from "@/src/app/types/JsonValue";
 import { LoadingPanel } from "@/src/app/components/LoadingPanel"
+import { ErrorPanel } from  "@/src/app/components/ErrorPanel"
 
 import "@/src/app/styles/pageArea.css";
 import "@/src/app/styles/controlArea.css";
 import styles from "./page.module.css";
-import { error } from "console";
 
 export default function AnalysePage() {
   const [selectedModel, setSelectedModel] = useState<ItemSelectorEntity>();

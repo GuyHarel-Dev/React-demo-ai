@@ -18,6 +18,8 @@ export default function DocumentPage() {
   const [selectedDocument, setSelectedDocument] = useState<DocumentInfo | null>(
     null,
   );
+  const [hasError, setHasError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>()
 
   const documents = useDocuments();
 
@@ -30,9 +32,10 @@ export default function DocumentPage() {
         setSelectedDocument(doc);
       }
     } catch (err) {
+      console.log(err);
       if (err instanceof Error) {
-
-        console.log(err.message);
+        setHasError(true);
+        setErrorMessage(err.message);
       }
 
     }
@@ -48,7 +51,7 @@ export default function DocumentPage() {
           onItemSelected={handleDocumentSelected}
         />
       </div>
-
+      {hasError ? <div>{errorMessage}</div> : <div>pas erreur</div>}
       <div className={styles.docViewArea}>
         {selectedDocument ? (
           <object

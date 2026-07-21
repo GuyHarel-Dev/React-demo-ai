@@ -4,7 +4,7 @@ interface ErrorPanelProps {
     message?: string
 }
 
-export function  DisplayErrorPanel({
+export function  ErrorPanel({
     message}: ErrorPanelProps) {
 
     return (
