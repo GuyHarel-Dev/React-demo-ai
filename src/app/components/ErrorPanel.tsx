@@ -1,16 +1,15 @@
-import styles from "./ErrorPanel.module.css";
+import "@/src/app/styles/errorArea.css";
 
 interface ErrorPanelProps {
-    message?: string
+    msg: string
 }
 
 export function  ErrorPanel({
-    message}: ErrorPanelProps) {
+    msg}: ErrorPanelProps) {
 
     return (
-        <div>
-            <p>Error:</p>
-            <p>{message}</p>
+        <div className="errorArea">
+            <p>{msg}</p>
         </div>
     );
 }

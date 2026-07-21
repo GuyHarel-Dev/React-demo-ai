@@ -3,11 +3,13 @@
 import { useState } from "react";
 
 import styles from "./page.module.css";
+
 import "@/src/app/styles/pageArea.css";
 import "@/src/app/styles/controlArea.css";
 
 import { ItemSelector } from "@/src/app/components/ItemSelector";
 import { ItemSelectorEntity } from "@/src/app/types/ItemSelectorEntity";
+import { ErrorPanel } from "@/src/app/components/ErrorPanel";
 
 import { DocumentInfo } from "@/src/app/types/DocumentInfo";
 
@@ -19,12 +21,14 @@ export default function DocumentPage() {
     null,
   );
   const [hasError, setHasError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>()
-
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const documents = useDocuments();
 
   async function handleDocumentSelected(item: ItemSelectorEntity) {
     const documentName = documents.find((d) => d.id === item.id);
+
+    setHasError(false);
+    setErrorMessage("");
 
     try {
       if (documentName) {
@@ -32,13 +36,12 @@ export default function DocumentPage() {
         setSelectedDocument(doc);
       }
     } catch (err) {
-      console.log(err);
       if (err instanceof Error) {
         setHasError(true);
         setErrorMessage(err.message);
       }
 
-    }
+    } 
   }
 
   return (
@@ -51,7 +54,8 @@ export default function DocumentPage() {
           onItemSelected={handleDocumentSelected}
         />
       </div>
-      {hasError ? <div>{errorMessage}</div> : <div>pas erreur</div>}
+      <h1>{hasError ? <ErrorPanel msg={errorMessage}></ErrorPanel> : <p></p>}</h1>
+      
       <div className={styles.docViewArea}>
         {selectedDocument ? (
           <object
