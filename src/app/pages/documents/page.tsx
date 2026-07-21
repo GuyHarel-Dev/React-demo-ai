@@ -24,10 +24,17 @@ export default function DocumentPage() {
   async function handleDocumentSelected(item: ItemSelectorEntity) {
     const documentName = documents.find((d) => d.id === item.id);
 
-    if (documentName) {
-      console.log("documentName=", documentName.label);
-      const doc = await getDocumentStream(documentName.label);
-      setSelectedDocument(doc);
+    try {
+      if (documentName) {
+        const doc = await getDocumentStream(documentName.label);
+        setSelectedDocument(doc);
+      }
+    } catch (err) {
+      if (err instanceof Error) {
+
+        console.log(err.message);
+      }
+
     }
   }
 

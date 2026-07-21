@@ -12,12 +12,15 @@ import { LoadingPanel } from "@/src/app/components/LoadingPanel"
 import "@/src/app/styles/pageArea.css";
 import "@/src/app/styles/controlArea.css";
 import styles from "./page.module.css";
+import { error } from "console";
 
 export default function AnalysePage() {
   const [selectedModel, setSelectedModel] = useState<ItemSelectorEntity>();
   const [selectedDocument, setSelectedDocument] = useState<ItemSelectorEntity>();
   const [analysisResult, setAnalysisResult] = useState<JsonValue>();
   const [isLoading, setIsLoading] = useState(false);
+  const [hasError, setHasError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>()
 
   const documents = useDocuments();
 
@@ -33,7 +36,6 @@ export default function AnalysePage() {
   }
 
   async function handleModelSelected(model: ItemSelectorEntity) {
-    console.log("model_entity", model);
     setSelectedModel(model);
   }
 
@@ -49,7 +51,9 @@ export default function AnalysePage() {
         setAnalysisResult(doc);
 
       } catch (err) {
-        console.error(err);
+        console.log(err);
+        setHasError(true)
+        setErrorMessage("error1");
 
       } finally {
         setIsLoading(false);
@@ -74,6 +78,7 @@ export default function AnalysePage() {
           {isLoading ? (<LoadingPanel message="Analyzing..." />) : "Analyze document"}
         </button>
       </div>
+      {hasError ? <div>{errorMessage}</div> : <div>pas erreur</div>}
       <pre>{JSON.stringify(analysisResult, null, 2)}</pre>
     </div>
   );

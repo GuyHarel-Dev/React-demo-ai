@@ -3,7 +3,7 @@ import type { DocumentInfo } from "@/src/app/types/DocumentInfo";
 import { apiRoutes } from "@/src/app/config/apiRoutes";
 import { LLM_MODELS } from "@/src/app/config/models";
 
-import {JsonValue } from "@/src/app/types/JsonVAlue";
+import {JsonValue } from "@/src/app/types/JsonValue";
 
 export function getModels() {
   return LLM_MODELS;
@@ -32,7 +32,11 @@ export async function getDocumentStream(
   const res = await fetch(url);
 
   if (!res.ok) {
-    throw new Error(`Failed to stream document: ${res.status}`);
+    const error = await res.json();
+
+    throw new Error(
+      `${error.detail} - HTTP ${res.status}`
+    );
   }
 
   // Read the content type sent dynamically by your updated Python server
@@ -63,7 +67,9 @@ export async function getDocumentAnalysis(
     body: JSON.stringify({ model_name: modelName, file_name: fileName }),
   });
 
-  console.log("res=", res)
+  if (!res.ok) {
+    throw new Error(`Failed to analyze document: ${res.status}`);
+  }
 
   return await res.json(); 
 
