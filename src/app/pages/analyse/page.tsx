@@ -52,9 +52,13 @@ export default function AnalysePage() {
         setAnalysisResult(doc);
 
       } catch (err) {
-        console.log(err);
+        
         setHasError(true)
-        setErrorMessage("error1");
+        if (err instanceof Error) {
+          setErrorMessage(err.message);
+        } else {
+          setErrorMessage(String(err));
+        }
 
       } finally {
         setIsLoading(false);

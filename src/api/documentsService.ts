@@ -14,7 +14,11 @@ export async function getDocuments(): Promise<DocumentInfo[] | null> {
   const res = await fetch(apiRoutes.getDocuments);
 
   if (!res.ok) {
-    throw new Error(`Failed to fetch documents: ${res.status}`);
+    const error = await res.json();
+
+    throw new Error(
+      `${error.detail} - HTTP ${res.status}`
+    );
   }
 
   // Returns your array containing { file_name, file_url } JSON objects
@@ -72,7 +76,11 @@ export async function getDocumentAnalysis(
   });
 
   if (!res.ok) {
-    throw new Error(`Failed to analyze document: ${res.status}`);
+    const error = await res.json();
+    
+    throw new Error(
+      `${error.detail} - HTTP ${res.status}`
+    );
   }
 
   return await res.json(); 
