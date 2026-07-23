@@ -3,7 +3,7 @@ import type { DocumentInfo } from "@/src/app/types/DocumentInfo";
 import { apiRoutes } from "@/src/app/config/apiRoutes";
 import { LLM_MODELS } from "@/src/app/config/models";
 
-import {JsonValue } from "@/src/app/types/JsonValue";
+import { JsonValue } from "@/src/app/types/JsonValue";
 
 export function getModels() {
   return LLM_MODELS;
@@ -64,25 +64,53 @@ export async function getDocumentStream(
 export async function getDocumentAnalysis(
   modelName: string,
   fileName: string,
+  saveAnalysis: boolean
 ): Promise<JsonValue> {
   const url = apiRoutes.postDocumentAnalysis;
+  const jsonBody = JSON.stringify({ model_name: modelName, file_name: fileName })
+  //const jsonBody = JSON.stringify({ model_name: modelName, file_name: fileName, save_analysis: saveAnalysis })
 
-  const res = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ model_name: modelName, file_name: fileName }),
-  });
+  let response = {}
 
-  if (!res.ok) {
-    const error = await res.json();
-    
-    throw new Error(
-      `${error.detail} - HTTP ${res.status}`
-    );
+  console.log("url=", url)
+  console.log("body=", JSON.stringify({ model_name: modelName, file_name: fileName, save_analysis: saveAnalysis }))
+
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: jsonBody,
+    });
+
+    console.log("res=", res)
+
+    if (!res.ok) {
+      console.log("res=", res.ok)
+      const error = await res.json();
+      response = { "error": error.detail, "status": res.status }
+
+    }
+
+    return await res.json();
+
+  }
+  catch (error) {
+    console.log("catch error=", error)
+    response = {
+      error: true,
+      url: url,
+      body: jsonBody,
+      message: error instanceof Error
+        ? error.message
+        : String(error),
+    };
   }
 
-  return await res.json(); 
+  return response;
+
+
+
 
 }

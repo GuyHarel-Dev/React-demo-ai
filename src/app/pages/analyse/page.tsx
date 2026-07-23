@@ -9,7 +9,7 @@ import { useDocuments } from "@/src/app/hooks/useDocuments";
 import { getDocumentAnalysis, getModels } from "@/src/api/documentsService";
 import { JsonValue } from "@/src/app/types/JsonValue";
 import { LoadingPanel } from "@/src/app/components/LoadingPanel"
-import { ErrorPanel } from  "@/src/app/components/ErrorPanel"
+import { ErrorPanel } from "@/src/app/components/ErrorPanel"
 
 import "@/src/app/styles/pageArea.css";
 import "@/src/app/styles/controlArea.css";
@@ -22,6 +22,7 @@ export default function AnalysePage() {
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>("")
+  const [saveAnalysisChecked, setSaveAnalysisChecked] = useState(false);
 
   const documents = useDocuments();
 
@@ -32,6 +33,12 @@ export default function AnalysePage() {
     }));
   }
 
+  async function handleSaveAnalysisChecked(event:  React.ChangeEvent<HTMLInputElement>) {
+    const isChecked = event.target.checked;
+
+    setSaveAnalysisChecked(isChecked)
+
+  }
   async function handleDocumentSelected(document: ItemSelectorEntity) {
     setSelectedDocument(document);
   }
@@ -41,6 +48,7 @@ export default function AnalysePage() {
   }
 
   async function onAnalyzeDocument() {
+
     if (selectedModel && selectedDocument) {
       try {
         setIsLoading(true);
@@ -50,6 +58,7 @@ export default function AnalysePage() {
         const doc = await getDocumentAnalysis(
           selectedModel.id,
           selectedDocument.id,
+          saveAnalysisChecked
         );
         setAnalysisResult(doc);
 
@@ -84,6 +93,14 @@ export default function AnalysePage() {
         <button className={styles.button} onClick={onAnalyzeDocument} disabled={isLoading}>
           {isLoading ? (<LoadingPanel message="Analyzing..." />) : "Analyze document"}
         </button>
+
+        <label>
+          <input type="checkbox"                
+              checked={saveAnalysisChecked}
+              onChange={(e) => handleSaveAnalysisChecked(e)} />
+          Save analysis
+        </label>
+
       </div>
       <div>{hasError ? <ErrorPanel msg={errorMessage}></ErrorPanel> : <p></p>}</div>
       <pre>{JSON.stringify(analysisResult, null, 2)}</pre>
