@@ -19,7 +19,7 @@ export default function Sidebar() {
             <Link href="/pages/analyse">Analyze</Link>
           </li>
           <li>
-            <Link href="/knowledge">Knowledge</Link>
+            <Link href="/pages/embeddings">Embeddings</Link>
           </li>
           <li>
             <Link href="/emantic">Semantic</Link>
