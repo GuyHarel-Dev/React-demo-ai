@@ -6,7 +6,7 @@ import { ItemSelector } from "@/src/app/components/ItemSelector";
 import { ItemSelectorEntity } from "@/src/app/types/ItemSelectorEntity";
 
 import { useDocuments } from "@/src/app/hooks/useDocuments";
-import { getDocumentAnalysis, getModels } from "@/src/api/documentsService";
+import { postCreateDocumentAnalysis, getModels } from "@/src/api/documentsService";
 import { JsonValue } from "@/src/app/types/JsonValue";
 import { LoadingPanel } from "@/src/app/components/LoadingPanel"
 import { ErrorPanel } from "@/src/app/components/ErrorPanel"
@@ -55,7 +55,7 @@ export default function AnalysePage() {
         setHasError(false);
         setErrorMessage("");
 
-        const doc = await getDocumentAnalysis(
+        const doc = await postCreateDocumentAnalysis(
           selectedModel.id,
           selectedDocument.id,
           saveAnalysisChecked

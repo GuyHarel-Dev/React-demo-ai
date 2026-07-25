@@ -9,20 +9,20 @@ export function getModels() {
   return LLM_MODELS;
 }
 
-export async function getDocuments(): Promise<DocumentInfo[] | null> {
+export async function getDocuments(): Promise<DocumentInfo[]> {
 
-  const res = await fetch(apiRoutes.getDocuments);
+  const response = await fetch(apiRoutes.getDocuments);
 
-  if (!res.ok) {
-    const error = await res.json();
+ 
+  if (!response.ok) {
+    const error = await response.text();
 
     throw new Error(
-      `${error.detail} - HTTP ${res.status}`
+      `$error: ${error} - HTTP ${response.status}`
     );
   }
 
-  // Returns your array containing { file_name, file_url } JSON objects
-  return res.json();
+  return response.json() as Promise<DocumentInfo[]>;
 }
 
 /**
@@ -35,25 +35,21 @@ export async function getDocumentStream(
 ): Promise<DocumentInfo> {
 
   const url = apiRoutes.getDocumentStream(fileName);
-  const res = await fetch(url, {
+  const response = await fetch(url, {
     cache: "no-store",
   });
 
-  if (!res.ok) {
-    const error = await res.json();
+  if (!response.ok) {
+    const error = await response.text();
 
     throw new Error(
-      `${error.detail} - HTTP ${res.status}`
+      `${error} - HTTP ${response.status}`
     );
   }
 
-  // Read the content type sent dynamically by your updated Python server
-  const mimeType = res.headers.get("content-type") || "application/pdf";
+  const mimeType = response.headers.get("content-type") || "application/pdf";
+  const blob = await response.blob();
 
-  // 1. Download the response stream as a binary Blob object
-  const blob = await res.blob();
-
-  // 2. Generate a secure, temporary local pointer (e.g., blob:http://localhost:3000/...)
   return {
     file_name: "", // Provide the actual filename here
     blob_url: URL.createObjectURL(blob),
@@ -61,56 +57,32 @@ export async function getDocumentStream(
   } as DocumentInfo;
 }
 
-export async function getDocumentAnalysis(
+export async function postCreateDocumentAnalysis(
   modelName: string,
   fileName: string,
   saveAnalysis: boolean
 ): Promise<JsonValue> {
-  const url = apiRoutes.postDocumentAnalysis;
-  const jsonBody = JSON.stringify({ model_name: modelName, file_name: fileName })
-  //const jsonBody = JSON.stringify({ model_name: modelName, file_name: fileName, save_analysis: saveAnalysis })
 
-  let response = {}
+  const response = await fetch(apiRoutes.postDocumentAnalysis, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      model_name: modelName,
+      file_name: fileName,
+      save_analysis: saveAnalysis,
+    }),
+  });
 
-  console.log("url=", url)
-  console.log("body=", JSON.stringify({ model_name: modelName, file_name: fileName, save_analysis: saveAnalysis }))
+  if (!response.ok) {
+    const error = await response.text();
 
-  try {
-    const res = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: jsonBody,
-    });
-
-    console.log("res=", res)
-
-    if (!res.ok) {
-      console.log("res=", res.ok)
-      const error = await res.json();
-      response = { "error": error.detail, "status": res.status }
-
-    }
-
-    return await res.json();
-
-  }
-  catch (error) {
-    console.log("catch error=", error)
-    response = {
-      error: true,
-      url: url,
-      body: jsonBody,
-      message: error instanceof Error
-        ? error.message
-        : String(error),
-    };
+    throw new Error(
+      `${error} - HTTP ${response.status}`
+    );
   }
 
-  return response;
-
-
-
-
+  return response.json();
 }
+
