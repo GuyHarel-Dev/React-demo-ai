@@ -13,7 +13,6 @@ import { ErrorPanel } from "@/src/app/components/ErrorPanel"
 
 import "@/src/app/styles/pageArea.css";
 import "@/src/app/styles/controlArea.css";
-import styles from "./page.module.css";
 
 export default function AnalysePage() {
   const [selectedModel, setSelectedModel] = useState<ItemSelectorEntity>();
@@ -76,10 +75,11 @@ export default function AnalysePage() {
       }
     }
   }
+
   return (
     <div className="pageArea">
       <div className="pageTitle">Analysis Page</div>
-      <div className={`controlArea ${styles.controlAreaFlex}`}>
+      <div className="controlArea">
         <ItemSelector
           title="Select a document:"
           itemArray={documents}
@@ -90,7 +90,7 @@ export default function AnalysePage() {
           itemArray={getModelSelection()}
           onItemSelected={handleModelSelected}
         />
-        <button className={styles.button} onClick={onAnalyzeDocument} disabled={isLoading}>
+        <button className="buttons" onClick={onAnalyzeDocument} disabled={isLoading}>
           {isLoading ? (<LoadingPanel message="Analyzing..." />) : "Analyze document"}
         </button>
 

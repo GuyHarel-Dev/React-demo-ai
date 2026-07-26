@@ -1,27 +1,27 @@
-
 import { apiRoutes } from "@/src/app/config/apiRoutes";
 
-export async function getTextEmbeddings(
-  text: string
-): Promise<string> {
-  const url = apiRoutes.postEmbbedText;
+import { JsonValue } from "@/src/app/types/JsonValue";
 
-  const res = await fetch(url, {
+export async function postCreateEmbeddings(
+  fileName: string
+): Promise<JsonValue> {
+
+  const response = await fetch(apiRoutes.postEmbbedText, {
     method: "POST",
     headers: {
-      "Content-Type": "application/text",
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify({ embed_text: text}),
+    body: JSON.stringify({"file_id": "abc","file_name": fileName}),
   });
 
-  if (!res.ok) {
-    const error = await res.json();
-    
+  console.log("res=", response)
+  if (!response.ok) {
+    const error = await response.text();
+
     throw new Error(
-      `${error.detail} - HTTP ${res.status}`
+      `${error} - HTTP ${response.status}`
     );
   }
 
-  return await res.json(); 
-
+  return response.json();
 }
