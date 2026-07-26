@@ -27,7 +27,17 @@ export function ItemSelector({
   return (
     <div>
       <div>{title}</div>
-      <div>{itemArray.map((item, index) => (<h1 key={index}>{item.label}</h1>))}</div>
+      <select className="selectArea" onChange={handleChange} defaultValue="">
+        <option value="" disabled>
+          (select an item)
+        </option>
+        {itemArray?.map((doc, index) => (
+          <option key={`${doc.id}-${index}`} value={doc.label}>
+            {doc.label}
+          </option>
+        ))}
+      </select>
+
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import type { DocumentInfo } from "@/src/app/types/DocumentInfo";
+import type { StoreDocumentResponse, RepoDocumentResponse} from "@/src/app/types/DocumentServiceResponse";
 
 import { apiRoutes } from "@/src/app/config/apiRoutes";
 import { LLM_MODELS } from "@/src/app/config/models";
@@ -9,7 +10,7 @@ export function getModels() {
   return LLM_MODELS;
 }
 
-export async function getStoreDocuments(): Promise<DocumentInfo[]> {
+export async function getStoreDocuments(): Promise<StoreDocumentResponse[]> {
 
   const response = await fetch(apiRoutes.getStoreDocuments);
 
@@ -21,11 +22,11 @@ export async function getStoreDocuments(): Promise<DocumentInfo[]> {
     );
   }
 
-  return response.json() as Promise<DocumentInfo[]>;
+  return response.json() as Promise<StoreDocumentResponse[]>;
 }
 
 
-export async function getRepositoryDocuments(): Promise<DocumentInfo[]> {
+export async function getRepositoryDocuments(): Promise<RepoDocumentResponse[]> {
 
   const response = await fetch(apiRoutes.getAllDocumentAnalysis);
 
@@ -36,10 +37,7 @@ export async function getRepositoryDocuments(): Promise<DocumentInfo[]> {
       `$error: ${error} - HTTP ${response.status}`
     );
   }
-
-  console.log("type=", typeof(response))
-
-  return response.json() as Promise<DocumentInfo[]>;
+  return response.json() as Promise<RepoDocumentResponse[]>;
 }
 
 /**
@@ -68,9 +66,9 @@ export async function getDocumentStream(
   const blob = await response.blob();
 
   return {
-    file_name: "", // Provide the actual filename here
-    blob_url: URL.createObjectURL(blob),
-    mime_type: mimeType,
+    fileName: "", // Provide the actual filename here
+    blobUrl: URL.createObjectURL(blob),
+    mimeType: mimeType,
   } as DocumentInfo;
 }
 

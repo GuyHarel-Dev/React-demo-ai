@@ -23,7 +23,7 @@ export default function AnalysePage() {
   const [errorMessage, setErrorMessage] = useState<string>("")
   const [saveAnalysisChecked, setSaveAnalysisChecked] = useState(false);
 
-  const documents = useRepositoryDocuments();
+  const repoDocuments = useRepositoryDocuments();
 
   function getModelSelection() {
     return getModels().map((m) => ({
@@ -32,14 +32,10 @@ export default function AnalysePage() {
     }));
   }
 
-  function getDocumentSelection() {
-    const docs = documents.map((doc) => ({
-      id: doc.id,
-      label: doc.label
-    }));
+  function getRepoDocumentSelection() {
 
-    console.log("docs2=", docs)
-    return documents.map((doc) => ({
+    console.log("repoDocuments=", repoDocuments)
+    return repoDocuments.map((doc) => ({
       id: doc.id,
       label: doc.label
     }));
@@ -95,7 +91,7 @@ export default function AnalysePage() {
       <div className="controlArea">
         <ItemSelector
           title="Select a document:"
-          itemArray={getDocumentSelection()}
+          itemArray={getRepoDocumentSelection()}
           onItemSelected={handleDocumentSelected}
         />
         <ItemSelector

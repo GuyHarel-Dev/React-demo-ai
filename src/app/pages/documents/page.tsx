@@ -13,7 +13,7 @@ import { ErrorPanel } from "@/src/app/components/ErrorPanel";
 
 import { DocumentInfo } from "@/src/app/types/DocumentInfo";
 
-import { useRepositoryDocuments } from "@/src/app/hooks/useRepositoryDocuments";
+import { useStoreDocuments } from "@/src/app/hooks/useStoreDocuments";
 import { getDocumentStream } from "@/src/api/documentsService";
 
 export default function DocumentPage() {
@@ -23,7 +23,7 @@ export default function DocumentPage() {
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
 
-  const documents = useRepositoryDocuments();
+  const documents = useStoreDocuments();
 
   async function handleDocumentSelected(item: ItemSelectorEntity) {
     const document = documents.find((d) => d.label === item.label);
@@ -63,11 +63,11 @@ export default function DocumentPage() {
         {selectedDocument ? (
           <object
             className={styles.docViewObject}
-            key={selectedDocument.blob_url}
-            data={selectedDocument.blob_url}
-            type={selectedDocument.mime_type}
+            key={selectedDocument.fileId}
+            data={selectedDocument.blobUrl}
+            type={selectedDocument.mimeType}
           >
-            <p>Cannot display document:{selectedDocument.file_name}</p>
+            <p>Cannot display document:{selectedDocument.fileName}</p>
           </object>
         ) : (
           <p>&nbsp;</p>

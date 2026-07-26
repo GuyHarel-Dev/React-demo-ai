@@ -1,6 +1,6 @@
 export interface DocumentInfo {
-  file_id: string;
-  file_name: string;
-  blob_url: string;
-  mime_type: string;
+  fileId: string;
+  fileName: string;
+  blobUrl: string;
+  mimeType: string;
 }

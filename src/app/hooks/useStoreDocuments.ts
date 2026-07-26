@@ -13,8 +13,8 @@ export function useStoreDocuments() {
 
       console.log("docs=", docs)
       setDocuments(
-        (docs ?? []).map((d) => ({
-          id: d.file_id,
+        (docs ?? []).map((d, index) => ({
+          id: index.toString(),
           label: d.file_name,
         }))
       );
