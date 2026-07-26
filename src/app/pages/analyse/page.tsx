@@ -32,7 +32,20 @@ export default function AnalysePage() {
     }));
   }
 
-  async function handleSaveAnalysisChecked(event:  React.ChangeEvent<HTMLInputElement>) {
+  function getDocumentSelection() {
+    const docs = documents.map((doc) => ({
+      id: doc.id,
+      label: doc.label
+    }));
+
+    console.log("docs2=", docs)
+    return documents.map((doc) => ({
+      id: doc.id,
+      label: doc.label
+    }));
+  }
+
+  async function handleSaveAnalysisChecked(event: React.ChangeEvent<HTMLInputElement>) {
     const isChecked = event.target.checked;
 
     setSaveAnalysisChecked(isChecked)
@@ -82,7 +95,7 @@ export default function AnalysePage() {
       <div className="controlArea">
         <ItemSelector
           title="Select a document:"
-          itemArray={documents}
+          itemArray={getDocumentSelection()}
           onItemSelected={handleDocumentSelected}
         />
         <ItemSelector
@@ -95,9 +108,9 @@ export default function AnalysePage() {
         </button>
 
         <label>
-          <input type="checkbox"                
-              checked={saveAnalysisChecked}
-              onChange={(e) => handleSaveAnalysisChecked(e)} />
+          <input type="checkbox"
+            checked={saveAnalysisChecked}
+            onChange={(e) => handleSaveAnalysisChecked(e)} />
           Save analysis
         </label>
 

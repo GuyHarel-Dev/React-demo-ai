@@ -10,11 +10,11 @@ export function useRepositoryDocuments() {
   useEffect(() => {
     async function loadDocuments() {
       const docs = await getRepositoryDocuments();
-
-      console.log("docs=", docs)
+      
+      console.log("docs3=", docs)
       setDocuments(
         (docs ?? []).map((d) => ({
-          id: d.file_name,
+          id: d.file_id,
           label: d.file_name,
         }))
       );

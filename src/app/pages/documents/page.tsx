@@ -13,7 +13,7 @@ import { ErrorPanel } from "@/src/app/components/ErrorPanel";
 
 import { DocumentInfo } from "@/src/app/types/DocumentInfo";
 
-import { useStoreDocuments } from "@/src/app/hooks/useStoreDocuments";
+import { useRepositoryDocuments } from "@/src/app/hooks/useRepositoryDocuments";
 import { getDocumentStream } from "@/src/api/documentsService";
 
 export default function DocumentPage() {
@@ -23,7 +23,7 @@ export default function DocumentPage() {
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
 
-  const documents = useStoreDocuments();
+  const documents = useRepositoryDocuments();
 
   async function handleDocumentSelected(item: ItemSelectorEntity) {
     const document = documents.find((d) => d.label === item.label);

@@ -37,6 +37,8 @@ export async function getRepositoryDocuments(): Promise<DocumentInfo[]> {
     );
   }
 
+  console.log("type=", typeof(response))
+
   return response.json() as Promise<DocumentInfo[]>;
 }
 
