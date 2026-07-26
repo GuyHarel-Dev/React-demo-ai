@@ -5,7 +5,7 @@ import { useState } from "react";
 import { ItemSelector } from "@/src/app/components/ItemSelector";
 import { ItemSelectorEntity } from "@/src/app/types/ItemSelectorEntity";
 
-import { useDocuments } from "@/src/app/hooks/useDocuments";
+import { useRepositoryDocuments } from "@/src/app/hooks/useRepositoryDocuments";
 import { postCreateDocumentAnalysis, getModels } from "@/src/api/documentsService";
 import { JsonValue } from "@/src/app/types/JsonValue";
 import { LoadingPanel } from "@/src/app/components/LoadingPanel"
@@ -23,7 +23,7 @@ export default function AnalysePage() {
   const [errorMessage, setErrorMessage] = useState<string>("")
   const [saveAnalysisChecked, setSaveAnalysisChecked] = useState(false);
 
-  const documents = useDocuments();
+  const documents = useRepositoryDocuments();
 
   function getModelSelection() {
     return getModels().map((m) => ({

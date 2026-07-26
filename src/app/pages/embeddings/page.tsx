@@ -8,7 +8,7 @@ import { ErrorPanel } from "@/src/app/components/ErrorPanel"
 import { ItemSelector } from "@/src/app/components/ItemSelector";
 import { ItemSelectorEntity } from "@/src/app/types/ItemSelectorEntity";
 
-import { useDocuments } from "@/src/app/hooks/useDocuments";
+import { useRepositoryDocuments } from "@/src/app/hooks/useRepositoryDocuments";
 
 import { postCreateEmbeddings } from "@/src/api/embeddingService";
 
@@ -19,28 +19,26 @@ export default function EmbeddingsPage() {
     const [isLoading, setIsLoading] = useState(false);
     const [hasError, setHasError] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string>("")
-    const [selectedDocument, setSelectedDocument] = useState<ItemSelectorEntity>();
+    const [selectedItem, setSelectedItem] = useState<ItemSelectorEntity>();
     const [embeddingsResult, setEmbeddingsResult] = useState<string>("")
 
-    const documents = useDocuments();
+    const documents = useRepositoryDocuments();
 
     async function handleDocumentSelected(item: ItemSelectorEntity) {
-        const documentName = documents.find((d) => d.id === item.id);
-        setSelectedDocument(documentName);
-        console.log(selectedDocument)
+        setSelectedItem(item);
     }
 
     async function onEmbbedText() {
 
-        if (selectedDocument) {
+        if (selectedItem) {
             try {
                 setIsLoading(true);
                 setHasError(false);
                 setErrorMessage("");
 
                 const result = await postCreateEmbeddings(
-                    selectedDocument.id,
-                    selectedDocument.label
+                    selectedItem.id,
+                    selectedItem.label
                 );
 
                 setEmbeddingsResult(JSON.stringify(result));

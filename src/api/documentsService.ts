@@ -9,11 +9,26 @@ export function getModels() {
   return LLM_MODELS;
 }
 
-export async function getDocuments(): Promise<DocumentInfo[]> {
+export async function getStoreDocuments(): Promise<DocumentInfo[]> {
 
-  const response = await fetch(apiRoutes.getDocuments);
+  const response = await fetch(apiRoutes.getStoreDocuments);
 
- 
+  if (!response.ok) {
+    const error = await response.text();
+
+    throw new Error(
+      `$error: ${error} - HTTP ${response.status}`
+    );
+  }
+
+  return response.json() as Promise<DocumentInfo[]>;
+}
+
+
+export async function getRepositoryDocuments(): Promise<DocumentInfo[]> {
+
+  const response = await fetch(apiRoutes.getAllDocumentAnalysis);
+
   if (!response.ok) {
     const error = await response.text();
 

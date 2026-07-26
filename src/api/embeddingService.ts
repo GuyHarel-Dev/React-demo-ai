@@ -3,6 +3,7 @@ import { apiRoutes } from "@/src/app/config/apiRoutes";
 import { JsonValue } from "@/src/app/types/JsonValue";
 
 export async function postCreateEmbeddings(
+  fileId: string,
   fileName: string
 ): Promise<JsonValue> {
 
@@ -11,10 +12,9 @@ export async function postCreateEmbeddings(
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({"file_id": "abc","file_name": fileName}),
+    body: JSON.stringify({"file_id": fileId,"file_name": fileName}),
   });
 
-  console.log("res=", response)
   if (!response.ok) {
     const error = await response.text();
 
