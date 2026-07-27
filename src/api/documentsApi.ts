@@ -17,13 +17,13 @@ export async function getDocumentAnalysisNames(): Promise<string[]> {
   return response.json() as Promise<string[]>;
 }
 
-export async function postCreateDocumentAnalysis(
+export async function postAnalyseDocument(
   modelName: string,
   fileName: string,
   saveAnalysis: boolean
 ): Promise<JsonValue> {
 
-  const response = await fetch(apiRoutes.postDocumentAnalysis, {
+  const response = await fetch(apiRoutes.postAnalyseDocument, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

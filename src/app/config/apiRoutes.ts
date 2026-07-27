@@ -13,7 +13,7 @@ export const apiRoutes = {
   getDocumentAnalysis: (fileName: string) =>
     `${apiBaseUrl}/api/repo/document/analysis/${encodeURIComponent(fileName)}`,
 
-  postDocumentAnalysis:
+  postAnalyseDocument:
     `${apiBaseUrl}/api/document/analysis`,
 
   postEmbbedText: `${apiBaseUrl}/api/embedding/text`

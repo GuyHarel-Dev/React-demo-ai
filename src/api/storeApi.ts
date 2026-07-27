@@ -45,7 +45,7 @@ export async function getDocumentStream(
     }
 
     const mimeType = response.headers.get("content-type") || "application/pdf";
-    const blob = await response.blob();
+    const blob = await response.blob(); 
 
     return {
         fileName: "", // Provide the actual filename here
