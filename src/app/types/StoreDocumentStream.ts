@@ -1,4 +1,4 @@
-export interface DocumentInfo {
+export interface StoreDocumentStream{
   fileId: string;
   fileName: string;
   blobUrl: string;

@@ -11,13 +11,14 @@ import { ItemSelector } from "@/src/app/components/ItemSelector";
 import { ItemSelectorEntity } from "@/src/app/types/ItemSelectorEntity";
 import { ErrorPanel } from "@/src/app/components/ErrorPanel";
 
-import { DocumentInfo } from "@/src/app/types/DocumentInfo";
 
 import { useStoreDocuments } from "@/src/app/hooks/useStoreDocuments";
-import { getDocumentStream } from "@/src/api/documentsApi";
+import { getDocumentStream } from "@/src/api/storeApi";
+
+import type { StoreDocumentStream } from "@/src/app/types/StoreDocumentStream";
 
 export default function DocumentPage() {
-  const [selectedDocument, setSelectedDocument] = useState<DocumentInfo | null>(
+  const [selectedDocument, setSelectedDocument] = useState<StoreDocumentStream | null>(
     null,
   );
   const [hasError, setHasError] = useState(false);
