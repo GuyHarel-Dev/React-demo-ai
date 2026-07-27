@@ -22,7 +22,14 @@ export default function EmbeddingsPage() {
     const [selectedItem, setSelectedItem] = useState<ItemSelectorEntity>();
     const [embeddingsResult, setEmbeddingsResult] = useState<string>("")
 
-    const documents = useDocumentAnalysisNames();
+    const analysisDocumentNames = useDocumentAnalysisNames();
+
+    function getDocumentAnalysisItems() {
+        return analysisDocumentNames.map((m, index) => ({
+            id: index.toString(),
+            label: m
+        }));
+    }
 
     async function handleDocumentSelected(item: ItemSelectorEntity) {
         setSelectedItem(item);
@@ -64,7 +71,7 @@ export default function EmbeddingsPage() {
             <div className="controlArea">
                 <ItemSelector
                     title="Select a document:"
-                    itemArray={documents}
+                    itemArray={getDocumentAnalysisItems()}
                     onItemSelected={handleDocumentSelected}
                 />
                 <button className="buttons" onClick={onEmbbedText} disabled={isLoading}>

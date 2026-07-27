@@ -2,14 +2,17 @@
 
 import { useState } from "react";
 
+import { LoadingPanel } from "@/src/app/components/LoadingPanel"
+import { ErrorPanel } from "@/src/app/components/ErrorPanel"
+
 import { ItemSelector } from "@/src/app/components/ItemSelector";
 import { ItemSelectorEntity } from "@/src/app/types/ItemSelectorEntity";
 
 import { useDocumentAnalysisNames } from "@/src/app/hooks/useDocumentAnalysisNames";
 import { postAnalyseDocument } from "@/src/api/documentsApi";
+
 import { JsonValue } from "@/src/app/types/JsonValue";
-import { LoadingPanel } from "@/src/app/components/LoadingPanel"
-import { ErrorPanel } from "@/src/app/components/ErrorPanel"
+
 
 import { LLM_MODELS } from "@/src/app/config/models";
 
@@ -27,14 +30,14 @@ export default function AnalysePage() {
 
   const analysisDocumentNames = useDocumentAnalysisNames();
 
-  function getModelsSelection() {
+  function getModelItems() {
     return LLM_MODELS.map((m) => ({
       id: m.name,
       label: m.desc,
     }));
   }
 
-  function getDocumentAnalysisSelection() {
+  function getDocumentAnalysisItems() {
     return analysisDocumentNames.map((m, index) => ({
       id: index.toString(),
       label: m
@@ -92,12 +95,12 @@ export default function AnalysePage() {
       <div className="controlArea">
         <ItemSelector
           title="Select a document:"
-          itemArray={getDocumentAnalysisSelection()}
+          itemArray={getDocumentAnalysisItems()}
           onItemSelected={handleDocumentSelected}
         />
         <ItemSelector
           title="Select a model:"
-          itemArray={getModelsSelection()}
+          itemArray={getModelItems()}
           onItemSelected={handleModelSelected}
         />
         <button className="buttons" onClick={onAnalyzeDocument} disabled={isLoading}>
