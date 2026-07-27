@@ -1,14 +1,8 @@
 import type { DocumentInfo } from "@/src/app/types/DocumentInfo";
-import type { StoreDocumentResponse, RepoDocumentResponse} from "@/src/app/types/ApiResponses";
+import type { StoreDocumentResponse} from "@/src/app/types/ApiResponses";
 
 import { apiRoutes } from "@/src/app/config/apiRoutes";
-import { LLM_MODELS } from "@/src/app/config/models";
-
 import { JsonValue } from "@/src/app/types/JsonValue";
-
-export function getModels() {
-  return LLM_MODELS;
-}
 
 export async function getStoreDocuments(): Promise<StoreDocumentResponse[]> {
 
@@ -26,7 +20,7 @@ export async function getStoreDocuments(): Promise<StoreDocumentResponse[]> {
 }
 
 
-export async function getDocumentAnalysisNames(): Promise<RepoDocumentResponse[]> {
+export async function getDocumentAnalysisNames(): Promise<string[]> {
 
   const response = await fetch(apiRoutes.getDocumentAnalysisNames);
 
@@ -37,7 +31,7 @@ export async function getDocumentAnalysisNames(): Promise<RepoDocumentResponse[]
       `$error: ${error} - HTTP ${response.status}`
     );
   }
-  return response.json() as Promise<RepoDocumentResponse[]>;
+  return response.json() as Promise<string[]>;
 }
 
 /**

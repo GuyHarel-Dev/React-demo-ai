@@ -5,11 +5,13 @@ import { useState } from "react";
 import { ItemSelector } from "@/src/app/components/ItemSelector";
 import { ItemSelectorEntity } from "@/src/app/types/ItemSelectorEntity";
 
-import { useRepositoryDocuments } from "@/src/app/hooks/useRepositoryDocuments";
-import { postCreateDocumentAnalysis, getModels } from "@/src/api/documentsApi";
+import { useDocumentAnalysisNames } from "@/src/app/hooks/useDocumentAnalysisNames";
+import { postCreateDocumentAnalysis } from "@/src/api/documentsApi";
 import { JsonValue } from "@/src/app/types/JsonValue";
 import { LoadingPanel } from "@/src/app/components/LoadingPanel"
 import { ErrorPanel } from "@/src/app/components/ErrorPanel"
+
+import { LLM_MODELS } from "@/src/app/config/models";
 
 import "@/src/app/styles/pageArea.css";
 import "@/src/app/styles/controlArea.css";
@@ -23,24 +25,25 @@ export default function AnalysePage() {
   const [errorMessage, setErrorMessage] = useState<string>("")
   const [saveAnalysisChecked, setSaveAnalysisChecked] = useState(false);
 
-  const repoDocuments = useRepositoryDocuments();
+  const analysisDocumentNames = useDocumentAnalysisNames();
 
-  function getModelSelection() {
-    return getModels().map((m) => ({
+  function getModelsSelection() {
+    return LLM_MODELS.map((m) => ({
       id: m.name,
       label: m.desc,
     }));
   }
 
-  function getRepoDocumentSelection() {
-
-    console.log("repoDocuments=", repoDocuments)
-    return repoDocuments.map((doc) => ({
-      id: doc.id,
-      label: doc.label
+  function getDocumentAnalysisSelection() {
+    return analysisDocumentNames.map((m, index) => ({
+      id: index.toString(),
+      label: m
     }));
+
   }
 
+  console.log("getDocumentAnalysisSelection()=", getDocumentAnalysisSelection())
+  
   async function handleSaveAnalysisChecked(event: React.ChangeEvent<HTMLInputElement>) {
     const isChecked = event.target.checked;
 
@@ -91,12 +94,12 @@ export default function AnalysePage() {
       <div className="controlArea">
         <ItemSelector
           title="Select a document:"
-          itemArray={getRepoDocumentSelection()}
+          itemArray={getDocumentAnalysisSelection()}
           onItemSelected={handleDocumentSelected}
         />
         <ItemSelector
           title="Select a model:"
-          itemArray={getModelSelection()}
+          itemArray={getModelsSelection()}
           onItemSelected={handleModelSelected}
         />
         <button className="buttons" onClick={onAnalyzeDocument} disabled={isLoading}>

@@ -8,7 +8,7 @@ import { ErrorPanel } from "@/src/app/components/ErrorPanel"
 import { ItemSelector } from "@/src/app/components/ItemSelector";
 import { ItemSelectorEntity } from "@/src/app/types/ItemSelectorEntity";
 
-import { useRepositoryDocuments } from "@/src/app/hooks/useRepositoryDocuments";
+import { useRepositoryDocuments } from "@/src/app/hooks/useDocumentAnalysisNames";
 
 import { postCreateEmbeddings } from "@/src/api/embeddingsApi";
 
