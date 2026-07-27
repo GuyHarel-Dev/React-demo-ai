@@ -14,7 +14,7 @@ import { ErrorPanel } from "@/src/app/components/ErrorPanel";
 import { DocumentInfo } from "@/src/app/types/DocumentInfo";
 
 import { useStoreDocuments } from "@/src/app/hooks/useStoreDocuments";
-import { getDocumentStream } from "@/src/api/documentsService";
+import { getDocumentStream } from "@/src/api/documentsApi";
 
 export default function DocumentPage() {
   const [selectedDocument, setSelectedDocument] = useState<DocumentInfo | null>(
@@ -25,15 +25,20 @@ export default function DocumentPage() {
 
   const documents = useStoreDocuments();
 
+  const documentItems: ItemSelectorEntity[] = documents.map((document) => ({
+    id: document.file_name,
+    label: document.file_name,
+  }));
+
   async function handleDocumentSelected(item: ItemSelectorEntity) {
-    const document = documents.find((d) => d.label === item.label);
+    const document = documents.find((d) => d.file_name === item.label);
 
     setHasError(false);
     setErrorMessage("");
 
     try {
       if (document) {
-        const doc = await getDocumentStream(document.label);
+        const doc = await getDocumentStream(document.file_name);
         setSelectedDocument(doc);
       }
     } catch (err) {
@@ -44,7 +49,7 @@ export default function DocumentPage() {
       } else {
         setErrorMessage(String(err));
       }
-    } 
+    }
   }
 
   return (
@@ -53,12 +58,12 @@ export default function DocumentPage() {
       <div className="controlArea">
         <ItemSelector
           title="Select a document:"
-          itemArray={documents}
+          itemArray={documentItems}
           onItemSelected={handleDocumentSelected}
         />
       </div>
       <div>{hasError ? <ErrorPanel msg={errorMessage}></ErrorPanel> : <p></p>}</div>
-      
+
       <div className={styles.docViewArea}>
         {selectedDocument ? (
           <object

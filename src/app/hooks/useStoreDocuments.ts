@@ -1,23 +1,18 @@
 // useDocuments.ts
 import { useEffect, useState } from "react";
 
-import { getStoreDocuments } from "@/src/api/documentsService";
-import { ItemSelectorEntity } from "@/src/app/types/ItemSelectorEntity";
+import { getStoreDocuments } from "@/src/api/documentsApi";
+import { StoreDocumentResponse } from "@/src/app/types/ApiResponses";
 
 export function useStoreDocuments() {
-  const [documents, setDocuments] = useState<ItemSelectorEntity[]>([]);
+  const [documents, setDocuments] = useState<StoreDocumentResponse[]>([]);
 
   useEffect(() => {
     async function loadDocuments() {
-      const docs = await getStoreDocuments();
+      const resp = await getStoreDocuments();
 
-      console.log("docs=", docs)
-      setDocuments(
-        (docs ?? []).map((d, index) => ({
-          id: index.toString(),
-          label: d.file_name,
-        }))
-      );
+      setDocuments(resp);
+      
     }
 
     loadDocuments();

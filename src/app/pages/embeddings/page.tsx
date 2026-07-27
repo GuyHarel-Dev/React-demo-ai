@@ -10,7 +10,7 @@ import { ItemSelectorEntity } from "@/src/app/types/ItemSelectorEntity";
 
 import { useRepositoryDocuments } from "@/src/app/hooks/useRepositoryDocuments";
 
-import { postCreateEmbeddings } from "@/src/api/embeddingService";
+import { postCreateEmbeddings } from "@/src/api/embeddingsApi";
 
 import "@/src/app/styles/pageArea.css";
 import "@/src/app/styles/controlArea.css";

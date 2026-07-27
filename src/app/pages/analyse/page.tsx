@@ -6,7 +6,7 @@ import { ItemSelector } from "@/src/app/components/ItemSelector";
 import { ItemSelectorEntity } from "@/src/app/types/ItemSelectorEntity";
 
 import { useRepositoryDocuments } from "@/src/app/hooks/useRepositoryDocuments";
-import { postCreateDocumentAnalysis, getModels } from "@/src/api/documentsService";
+import { postCreateDocumentAnalysis, getModels } from "@/src/api/documentsApi";
 import { JsonValue } from "@/src/app/types/JsonValue";
 import { LoadingPanel } from "@/src/app/components/LoadingPanel"
 import { ErrorPanel } from "@/src/app/components/ErrorPanel"

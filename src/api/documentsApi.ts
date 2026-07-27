@@ -1,5 +1,5 @@
 import type { DocumentInfo } from "@/src/app/types/DocumentInfo";
-import type { StoreDocumentResponse, RepoDocumentResponse} from "@/src/app/types/DocumentServiceResponse";
+import type { StoreDocumentResponse, RepoDocumentResponse} from "@/src/app/types/ApiResponses";
 
 import { apiRoutes } from "@/src/app/config/apiRoutes";
 import { LLM_MODELS } from "@/src/app/config/models";
@@ -26,9 +26,9 @@ export async function getStoreDocuments(): Promise<StoreDocumentResponse[]> {
 }
 
 
-export async function getRepositoryDocuments(): Promise<RepoDocumentResponse[]> {
+export async function getDocumentAnalysisNames(): Promise<RepoDocumentResponse[]> {
 
-  const response = await fetch(apiRoutes.getAllDocumentAnalysis);
+  const response = await fetch(apiRoutes.getDocumentAnalysisNames);
 
   if (!response.ok) {
     const error = await response.text();
@@ -49,7 +49,7 @@ export async function getDocumentStream(
   fileName: string,
 ): Promise<DocumentInfo> {
 
-  const url = apiRoutes.getDocumentStream(fileName);
+  const url = apiRoutes.getStoreDocumentStream(fileName);
   const response = await fetch(url, {
     cache: "no-store",
   });
