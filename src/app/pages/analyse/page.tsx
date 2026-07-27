@@ -41,8 +41,6 @@ export default function AnalysePage() {
     }));
 
   }
-
-  console.log("getDocumentAnalysisSelection()=", getDocumentAnalysisSelection())
   
   async function handleSaveAnalysisChecked(event: React.ChangeEvent<HTMLInputElement>) {
     const isChecked = event.target.checked;
