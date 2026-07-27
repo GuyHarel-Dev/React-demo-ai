@@ -1,7 +1,7 @@
 // useDocuments.ts
 import { useEffect, useState } from "react";
 
-import { getStoreDocuments } from "@/src/api/documentsApi";
+import { getStoreDocuments } from "@/src/api/storeApi";
 import { StoreDocumentResponse } from "@/src/app/types/ApiResponses";
 
 export function useStoreDocuments() {

@@ -8,7 +8,7 @@ import { ErrorPanel } from "@/src/app/components/ErrorPanel"
 import { ItemSelector } from "@/src/app/components/ItemSelector";
 import { ItemSelectorEntity } from "@/src/app/types/ItemSelectorEntity";
 
-import { useRepositoryDocuments } from "@/src/app/hooks/useDocumentAnalysisNames";
+import { useDocumentAnalysisNames } from "@/src/app/hooks/useDocumentAnalysisNames";
 
 import { postCreateEmbeddings } from "@/src/api/embeddingsApi";
 
@@ -22,7 +22,7 @@ export default function EmbeddingsPage() {
     const [selectedItem, setSelectedItem] = useState<ItemSelectorEntity>();
     const [embeddingsResult, setEmbeddingsResult] = useState<string>("")
 
-    const documents = useRepositoryDocuments();
+    const documents = useDocumentAnalysisNames();
 
     async function handleDocumentSelected(item: ItemSelectorEntity) {
         setSelectedItem(item);

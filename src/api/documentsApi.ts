@@ -1,24 +1,7 @@
 import type { DocumentInfo } from "@/src/app/types/DocumentInfo";
-import type { StoreDocumentResponse} from "@/src/app/types/ApiResponses";
 
 import { apiRoutes } from "@/src/app/config/apiRoutes";
 import { JsonValue } from "@/src/app/types/JsonValue";
-
-export async function getStoreDocuments(): Promise<StoreDocumentResponse[]> {
-
-  const response = await fetch(apiRoutes.getStoreDocuments);
-
-  if (!response.ok) {
-    const error = await response.text();
-
-    throw new Error(
-      `$error: ${error} - HTTP ${response.status}`
-    );
-  }
-
-  return response.json() as Promise<StoreDocumentResponse[]>;
-}
-
 
 export async function getDocumentAnalysisNames(): Promise<string[]> {
 
@@ -31,6 +14,7 @@ export async function getDocumentAnalysisNames(): Promise<string[]> {
       `$error: ${error} - HTTP ${response.status}`
     );
   }
+
   return response.json() as Promise<string[]>;
 }
 

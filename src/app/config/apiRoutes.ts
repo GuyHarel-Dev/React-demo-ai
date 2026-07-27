@@ -7,14 +7,14 @@ export const apiRoutes = {
   getStoreDocumentStream: (fileName: string) =>
     `${apiBaseUrl}/api/store/document/stream/${encodeURIComponent(fileName)}`,
 
-  postDocumentAnalysis: 
+  getDocumentAnalysisNames:
+    `${apiBaseUrl}/api/repo/document/analysis`,
+
+  getDocumentAnalysis: (fileName: string) =>
+    `${apiBaseUrl}/api/repo/document/analysis/${encodeURIComponent(fileName)}`,
+
+  postDocumentAnalysis:
     `${apiBaseUrl}/api/document/analysis`,
-
-  getDocumentAnalysisNames: 
-    `${apiBaseUrl}/api/document/analysis/names`,
-
-  getDocumentAnalysis: (fileName: string) => 
-      `${apiBaseUrl}/api/document/analysis/${encodeURIComponent(fileName)}`,
 
   postEmbbedText: `${apiBaseUrl}/api/embedding/text`
 };
