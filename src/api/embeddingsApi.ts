@@ -7,7 +7,7 @@ export async function postCreateEmbeddings(
   fileName: string
 ): Promise<JsonValue> {
 
-  const response = await fetch(apiRoutes.postEmbbedText, {
+  const response = await fetch(apiRoutes.postEmbbedDocumentAnalysis, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

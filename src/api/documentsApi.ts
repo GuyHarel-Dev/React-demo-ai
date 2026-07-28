@@ -19,7 +19,7 @@ export async function getDocumentAnalysisNames(): Promise<string[]> {
 
 export async function postAnalyseDocument(
   modelName: string,
-  fileName: string,
+  docName: string,
   saveAnalysis: boolean
 ): Promise<JsonValue> {
 
@@ -30,7 +30,7 @@ export async function postAnalyseDocument(
     },
     body: JSON.stringify({
       model_name: modelName,
-      file_name: fileName,
+      file_name: docName,
       save_analysis: saveAnalysis,
     }),
   });
