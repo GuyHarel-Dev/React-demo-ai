@@ -16,5 +16,7 @@ export const apiRoutes = {
   postAnalyseDocument:
     `${apiBaseUrl}/api/document/analysis`,
 
-  postEmbbedDocumentAnalysis: `${apiBaseUrl}/api/embedding/document/analysis`
+  postEmbbedDocumentAnalysis: `${apiBaseUrl}/api/embedding/document/analysis`,
+
+  postSearchDocumentAnalysis: `${apiBaseUrl}/api/embedding/document/search`
 };

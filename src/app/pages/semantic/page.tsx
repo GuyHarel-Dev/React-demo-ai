@@ -16,20 +16,49 @@ import { ItemSelectorEntity } from "@/src/app/types/ItemSelectorEntity";
 
 import { useDocumentAnalysisNames } from "@/src/app/hooks/useDocumentAnalysisNames";
 
+import { postSearchDocument } from "@/src/api/embeddingsApi";
+import { JsonValue } from "@/src/app/types/JsonValue";
 
 export default function EmbeddingsPage() {
     const [isLoading, setIsLoading] = useState(false);
     const [hasError, setHasError] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string>("")
-
     const [selectedItem, setSelectedItem] = useState<ItemSelectorEntity>();
-
     const [searchPrompt, setSearchPrompt] = useState<string>("");
+    const [searchResult, setSearchResult] = useState<JsonValue>();
 
     const analysisDocumentNames = useDocumentAnalysisNames();
 
-    function onSearchDocument() {
+    async function onSearchDocument() {
+        console.log("doc_name", selectedItem?.label)
+        console.log("searchPrompt", searchPrompt)
 
+        if (selectedItem) {
+            try {
+                setIsLoading(true);
+                setHasError(false);
+                setErrorMessage("");
+
+
+                const result = await postSearchDocument(
+                    selectedItem?.label,
+                    searchPrompt)
+
+                setSearchResult(result)
+
+            } catch (err) {
+
+                setHasError(true)
+                if (err instanceof Error) {
+                    setErrorMessage(err.message);
+                } else {
+                    setErrorMessage(String(err));
+                }
+
+            } finally {
+                setIsLoading(false);
+            }
+        }
     }
 
 
@@ -73,6 +102,8 @@ export default function EmbeddingsPage() {
                     </button>
 
                 </div>
+                {searchResult ? (<div>{searchResult.toLocaleString()}</div>) : <div>n</div>} 
+                 <pre>{JSON.stringify(searchResult, null, 2)}</pre>
             </div>
             <div>{hasError ? <ErrorPanel msg={errorMessage}></ErrorPanel> : <p></p>}</div>
         </div>
