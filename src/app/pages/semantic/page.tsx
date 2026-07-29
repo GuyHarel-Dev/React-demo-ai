@@ -30,8 +30,6 @@ export default function EmbeddingsPage() {
     const analysisDocumentNames = useDocumentAnalysisNames();
 
     async function onSearchDocument() {
-        console.log("doc_name", selectedItem?.label)
-        console.log("searchPrompt", searchPrompt)
 
         if (selectedItem) {
             try {
@@ -102,8 +100,7 @@ export default function EmbeddingsPage() {
                     </button>
 
                 </div>
-                {searchResult ? (<div>{searchResult.toLocaleString()}</div>) : <div>n</div>} 
-                 <pre>{JSON.stringify(searchResult, null, 2)}</pre>
+                <pre>{JSON.stringify(searchResult, null, 2)}</pre>
             </div>
             <div>{hasError ? <ErrorPanel msg={errorMessage}></ErrorPanel> : <p></p>}</div>
         </div>
