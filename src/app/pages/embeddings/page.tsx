@@ -18,6 +18,12 @@ import type { RepoDocumentResponse } from "@/src/app/types/ApiResponses";
 import "@/src/app/styles/pageArea.css";
 import "@/src/app/styles/controlArea.css";
 
+enum DisplayResult {
+    None,
+    Existing,
+    New
+}
+
 export default function EmbeddingsPage() {
     const [isLoading, setIsLoading] = useState(false);
     const [hasError, setHasError] = useState(false);
@@ -25,6 +31,7 @@ export default function EmbeddingsPage() {
     const [selectedItem, setSelectedItem] = useState<ItemSelectorEntity>();
     const [selectedDocument, setSelectedDocument] = useState<RepoDocumentResponse>();
     const [embeddingsResult, setEmbeddingsResult] = useState<string>("")
+    const [displayResultEnum, setDisplayResultEnum] = useState<DisplayResult>(DisplayResult.None)
 
     const analysisDocumentNames = useDocumentAnalysisNames();
 
@@ -36,12 +43,14 @@ export default function EmbeddingsPage() {
     }
 
     function parseJsonDocumentResult(document_result_json: string) {
-        return JSON.stringify(JSON.parse(document_result_json), null, 2);
+        if (document_result_json)
+            return JSON.stringify(JSON.parse(document_result_json), null, 2);
+        else
+            return "{no result to parse}"
     }
     async function handleDocumentSelected(item: ItemSelectorEntity) {
 
         setSelectedItem(item);
-
 
         try {
             const docName = analysisDocumentNames.find((d) => d === item.label);
@@ -49,6 +58,7 @@ export default function EmbeddingsPage() {
             if (docName) {
                 const document = await getDocumentAnalysis(docName);
                 setSelectedDocument(document);
+                setDisplayResultEnum(DisplayResult.Existing)
             }
         } catch (err) {
 
@@ -74,6 +84,7 @@ export default function EmbeddingsPage() {
                 );
 
                 setEmbeddingsResult(JSON.stringify(result));
+                setDisplayResultEnum(DisplayResult.New)
 
             } catch (err) {
 
@@ -104,20 +115,29 @@ export default function EmbeddingsPage() {
                 </button>
             </div>
             <div>{hasError ? <ErrorPanel msg={errorMessage}></ErrorPanel> : <p></p>}</div>
-            <pre>{embeddingsResult}</pre>
 
-            {selectedDocument && !embeddingsResult ? (
+            {displayResultEnum == DisplayResult.Existing ? (
                 <div>
                     <h3>Existing Analysis Result:</h3>
                     <pre>
-                        {parseJsonDocumentResult(selectedDocument.AnalysisResultJson)}
+                        {selectedDocument ? parseJsonDocumentResult(selectedDocument.AnalysisResultJson) : <p></p>}
                     </pre>
                 </div>
             ) : (
                 <p>&nbsp;</p>
             )}
 
-            {embeddingsResult && !selectedDocument ? ( <div>uuu</div>) : <div>rrr</div>}
+            {displayResultEnum == DisplayResult.New ? (
+                <div>
+                    <h3>New Analysis Result:</h3>
+                    <pre>
+                        {parseJsonDocumentResult(embeddingsResult)}
+                    </pre>
+                </div>
+            ) : (
+                <p>&nbsp;</p>
+            )}
+
         </div>
     )
 }
