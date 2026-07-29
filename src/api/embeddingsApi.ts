@@ -3,8 +3,7 @@ import { apiRoutes } from "@/src/app/config/apiRoutes";
 import { JsonValue } from "@/src/app/types/JsonValue";
 
 export async function postCreateEmbeddings(
-  fileId: string,
-  fileName: string
+  docName: string
 ): Promise<JsonValue> {
 
   const response = await fetch(apiRoutes.postEmbbedDocumentAnalysis, {
@@ -12,7 +11,7 @@ export async function postCreateEmbeddings(
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({"file_id": fileId,"file_name": fileName}),
+    body: JSON.stringify({"doc_name": docName}),
   });
 
   if (!response.ok) {

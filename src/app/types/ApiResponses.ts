@@ -4,6 +4,10 @@ export interface StoreDocumentResponse {
 }
 
 export interface RepoDocumentResponse {
-    file_id: string
-    file_name: string
+  Id: number,
+  FileName: string
+  BytesHash: string
+  CreatedAt: Date
+  AnalysisResultJson: string
+
 }

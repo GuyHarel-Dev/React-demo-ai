@@ -1,6 +1,7 @@
 
 import { apiRoutes } from "@/src/app/config/apiRoutes";
 import { JsonValue } from "@/src/app/types/JsonValue";
+import { RepoDocumentResponse } from "@/src/app/types/ApiResponses";
 
 export async function getDocumentAnalysisNames(): Promise<string[]> {
 
@@ -16,6 +17,22 @@ export async function getDocumentAnalysisNames(): Promise<string[]> {
 
   return response.json() as Promise<string[]>;
 }
+
+export async function getDocumentAnalysis(doc_name: string): Promise<RepoDocumentResponse> {
+
+  const response = await fetch(apiRoutes.getDocumentAnalysis(doc_name));
+
+  if (!response.ok) {
+    const error = await response.text();
+
+    throw new Error(
+      `$error: ${error} - HTTP ${response.status}`
+    );
+  }
+
+  return response.json() as Promise<RepoDocumentResponse>;
+}
+
 
 export async function postAnalyseDocument(
   modelName: string,
