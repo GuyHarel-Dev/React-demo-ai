@@ -22,7 +22,7 @@ export default function Sidebar() {
             <Link href="/pages/embeddings">Embeddings</Link>
           </li>
           <li>
-            <Link href="/emantic">Semantic</Link>
+            <Link href="/pages/semantic">Semantic</Link>
           </li>
         </ul>
       </nav>
