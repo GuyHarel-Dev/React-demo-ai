@@ -27,19 +27,19 @@ export default function DocumentPage() {
   const documents = useStoreDocuments();
 
   const documentItems: ItemSelectorEntity[] = documents.map((document) => ({
-    id: document.file_name,
-    label: document.file_name,
+    id: document.doc_name,
+    label: document.doc_name,
   }));
 
   async function handleDocumentSelected(item: ItemSelectorEntity) {
-    const document = documents.find((d) => d.file_name === item.label);
+    const document = documents.find((d) => d.doc_name === item.label);
 
     setHasError(false);
     setErrorMessage("");
 
     try {
       if (document) {
-        const doc = await getDocumentStream(document.file_name);
+        const doc = await getDocumentStream(document.doc_name);
         setSelectedDocument(doc);
       }
     } catch (err) {

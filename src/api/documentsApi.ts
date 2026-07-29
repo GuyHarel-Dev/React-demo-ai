@@ -30,7 +30,7 @@ export async function postAnalyseDocument(
     },
     body: JSON.stringify({
       model_name: modelName,
-      file_name: docName,
+      doc_name: docName,
       save_analysis: saveAnalysis,
     }),
   });

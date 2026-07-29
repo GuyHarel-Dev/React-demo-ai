@@ -1,6 +1,6 @@
    
 export interface StoreDocumentResponse {
-  file_name: string;
+  doc_name: string;
 }
 
 export interface RepoDocumentResponse {

@@ -28,14 +28,11 @@ export async function getDocumentStream(
 ): Promise<StoreDocumentStream> {
 
     const url = apiRoutes.getStoreDocumentStream(fileName);
-    console.log("url=", url)
+
     const response = await fetch(url, {
         cache: "no-store",
     });
 
-    if (response.ok) {
-      console.log("ok=", "---")  
-    }
     if (!response.ok) {
         const error = await response.text();
 
