@@ -20,12 +20,13 @@ import "@/src/app/styles/pageArea.css";
 import "@/src/app/styles/controlArea.css";
 
 export default function AnalysePage() {
-  const [selectedModel, setSelectedModel] = useState<ItemSelectorEntity>();
-  const [selectedDocument, setSelectedDocument] = useState<ItemSelectorEntity>();
-  const [analysisResult, setAnalysisResult] = useState<JsonValue>();
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>("")
+
+  const [selectedModel, setSelectedModel] = useState<ItemSelectorEntity>();
+  const [selectedDocument, setSelectedDocument] = useState<ItemSelectorEntity>();
+  const [analysisResult, setAnalysisResult] = useState<JsonValue>();
   const [saveAnalysisChecked, setSaveAnalysisChecked] = useState(false);
 
   const analysisDocumentNames = useDocumentAnalysisNames();
@@ -44,7 +45,7 @@ export default function AnalysePage() {
     }));
 
   }
-  
+
   async function handleSaveAnalysisChecked(event: React.ChangeEvent<HTMLInputElement>) {
     const isChecked = event.target.checked;
 
