@@ -83,6 +83,10 @@ export default function EmbeddingsPage() {
                         itemArray={getDocumentAnalysisItems()}
                         onItemSelected={handleDocumentSelected}
                     />
+
+
+                </div>
+                <div className="controlArea">
                     <label htmlFor="searchPrompt">
                         Search prompt:
                     </label>
@@ -98,7 +102,6 @@ export default function EmbeddingsPage() {
                     <button className="buttons" onClick={onSearchDocument} disabled={isLoading}>
                         {isLoading ? (<LoadingPanel message="Analyzing..." />) : "Analyze document"}
                     </button>
-
                 </div>
                 <pre>{JSON.stringify(searchResult, null, 2)}</pre>
             </div>
